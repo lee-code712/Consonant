@@ -1,6 +1,10 @@
 package com.project.consonant.service;
 
-// service interface 예시
+import com.project.consonant.domain.Member;
+import com.project.consonant.service.exception.LoginException;
+
 public interface MemberService {
+	
+	Member login(Member member) throws LoginException;
 
 }

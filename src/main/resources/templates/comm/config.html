@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+
+<html lang="ko" 
+  	xmlns:th="http://www.thymeleaf.org"
+ 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+ 	
+	<th:block th:fragment="configFragment">
+		<meta charset="UTF-8"/>
+		<title>consonant game</title>
+
+		<!-- 공통으로 사용할 css -->
+		<link th:href="@{/css/comm.css}" rel="stylesheet" />
+	    
+	    <th:block layout:fragment="css"></th:block>
+	    <th:block layout:fragment="script"></th:block>
+	    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	</th:block>
+	
+</html>

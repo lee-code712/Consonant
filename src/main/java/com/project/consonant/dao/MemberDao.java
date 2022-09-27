@@ -1,6 +1,9 @@
 package com.project.consonant.dao;
 
-// dao interface 예시
+import com.project.consonant.domain.Member;
+
 public interface MemberDao {
 
+	Member findMember(String memberId);
+	
 }

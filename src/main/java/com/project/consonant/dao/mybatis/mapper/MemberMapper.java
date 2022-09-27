@@ -2,8 +2,11 @@ package com.project.consonant.dao.mybatis.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
-// mapper.java 예시
-@Mapper
-public class MemberMapper {
+import com.project.consonant.domain.Member;
 
+@Mapper
+public interface MemberMapper {
+
+	Member selectMemberById(String memberId);
+	
 }

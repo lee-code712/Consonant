@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title>consonant game</title>
+	</head>
+	
+	<th:block layout:fragment="css">
+	<link th:href="@{/css/login.css}" rel="stylesheet" />
+		<link th:href="@{/css/comm.css}" rel="stylesheet" />
+		
+	</th:block>
+	
+	<th:block layout:fragment="script">
+	</th:block>
+	
+	<div layout:fragment="content">		
+		<form action="/member/login" method="post" th:object="${member}">
+			<div layout:fragment="content">
+				<div id="loginWrap">
+					<span class="login-img"></span>
+					<div class="login-tit">
+						LOGIN
+						<span class="error-msg" th:if="${loginFailed}" th:text="${e}"></span>
+					</div>
+					
+					<span class="id-tit">ID </span><input type="text" th:field="*{memberId}" />
+					<div class="id-invalid-feedback" th:errors="*{memberId}"></div>
+	
+					<span class="pw-tit">PW </span><input type="password" th:field="*{passwd}" />
+					<div class="pw-invalid-feedback" th:errors="*{passwd}"></div>
+					
+					<button type="submit" id="loginBtn">로그인</button>
+					<button type="button" id="signUpBtn"
+						onclick="location.href='/member/signUp'">회원가입</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+</html>
