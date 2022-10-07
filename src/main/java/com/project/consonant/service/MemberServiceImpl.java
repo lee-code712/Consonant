@@ -2,10 +2,12 @@ package com.project.consonant.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.project.consonant.dao.MemberDao;
 import com.project.consonant.domain.Member;
 import com.project.consonant.service.exception.LoginException;
+import com.project.consonant.service.exception.SignUpException;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -26,6 +28,17 @@ public class MemberServiceImpl implements MemberService {
 		}
 		
 		return findMember;
+	}
+
+	@Transactional
+	@Override
+	public void signUp(Member member) throws SignUpException {
+		
+		if (memberDao.findMember(member.getMemberId()) != null) {
+			throw new SignUpException("이미 등록된 회원 ID 입니다.");
+		}
+		
+		memberDao.createMember(member);
 	}
 
 }

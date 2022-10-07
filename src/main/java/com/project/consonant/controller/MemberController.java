@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.project.consonant.domain.Member;
 import com.project.consonant.service.MemberService;
 import com.project.consonant.service.exception.LoginException;
+import com.project.consonant.service.exception.SignUpException;
 
 @Controller
 @RequestMapping("/member")
@@ -50,8 +51,31 @@ public class MemberController {
 			model.addAttribute("loginFailed", true);
 			model.addAttribute("e", e.getMessage());
 			return "loginForm";
+		}	
+	}
+	
+	/* 회원가입 */
+	@GetMapping("/signUp")
+	public String signUpForm() {
+		return "signUpForm";
+	}
+	
+	@PostMapping("/signUp")
+	public String signUp(@Valid @ModelAttribute("member") Member member, BindingResult result,
+			HttpSession session, Model model) {
+		
+		if (result.hasErrors()) {
+			return "signUpForm";
 		}
 		
+		try {
+			memberSvc.signUp(member);
+			return "loginForm";
+		} catch (SignUpException e) {
+			model.addAttribute("signUpFailed", true);
+			model.addAttribute("e", e.getMessage());
+			return "signUpForm";
+		}	
 	}
 	
 }

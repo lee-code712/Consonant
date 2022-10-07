@@ -6,4 +6,5 @@ public interface MemberDao {
 
 	Member findMember(String memberId);
 	
+	void createMember(Member member);
 }

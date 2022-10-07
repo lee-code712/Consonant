@@ -1,0 +1,125 @@
+.login-img {
+	position: absolute;
+	width: 695px;
+	height: 836px;
+	left: 3px;
+	top: 68px;
+	
+	background: url(/images/exclamation_mark.svg);
+}
+
+.login-tit {
+	position: absolute;
+	width: 530px;
+	height: 119px;
+	left: 783px;
+	top: 256px;
+	
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 100px;
+	line-height: 121px;
+	
+	color: #000000;
+}
+
+.id-tit {
+	position: absolute;
+	width: 233px;
+	height: 76px;
+	left: 783px;
+	top: 428px;
+}
+
+.pw-tit {
+	position: absolute;
+	width: 233px;
+	height: 76px;
+	left: 783px;
+	top: 596px;
+}
+
+.id-tit, .pw-tit {
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 60px;
+	line-height: 73px;
+	
+	color: #000000;
+}
+
+#memberId {
+	position: absolute;
+	width: 440px;
+	height: 70px;
+	left: 938px;
+	top: 434px;
+}
+
+#passwd {
+	position: absolute;
+	width: 440px;
+	height: 70px;
+	left: 938px;
+	top: 584px;
+}
+
+#memberId, #passwd {
+	background: #FFFFFF;
+	border: 3px solid #FFFFFF;
+	border-radius: 50px;
+	
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 40px;
+	line-height: 61px;
+	text-align: center;
+}
+
+#signUpBtn {
+	position: absolute;
+	width: 595px;
+	height: 91px;
+	left: 783px;
+	top: 741px;
+
+	background: #FFFFFF;
+	border: 3px solid #FFFFFF;
+	border-radius: 50px;
+	
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 50px;
+	line-height: 61px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.error-msg {
+	font-size: 14px;
+}
+
+.id-invalid-feedback {
+	position: absolute;
+	width: 300px;
+	height: 100px;
+	left: 938px;
+	top: 520px;
+}
+
+.pw-invalid-feedback {
+	position: absolute;
+	width: 300px;
+	height: 100px;
+	left: 938px;
+	top: 670px;
+}
+
+.id-invalid-feedback,
+.pw-invalid-feedback {
+	font-size: 14px;
+}

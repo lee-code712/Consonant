@@ -11,4 +11,10 @@
 		WHERE member_id = #{memberId}
 	</select>
 	
+	<!-- 회원 정보 등록 -->
+	<insert id="insertMember" parameterType="Member">
+		INSERT INTO MEMBER (member_id, passwd, total_score, rank, point)
+		VALUES (#{memberId}, #{passwd}, 0, 0, 0)
+	</insert>
+	
 </mapper>
