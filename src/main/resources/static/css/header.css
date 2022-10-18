@@ -1,0 +1,70 @@
+header {
+	position: absolute;
+	width: 1440px;
+	height: 217px;
+	
+	background: #FFF1AA;
+	mix-blend-mode: normal;
+}
+
+.title {
+	position: absolute;
+	width: 564px;
+	height: 117px;
+	left: 438px;
+	top: 47px;
+	
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 70px;
+	line-height: 85px;
+	text-align: center;
+	
+	color: #000000;
+}
+
+.member_info {	
+	position: absolute;
+	width: 446px;
+	height: 70px;
+	left: 959px;
+	top: 61px;
+	
+	background: #FFFFFF;
+	border-radius: 40px;
+	
+	cursor: pointer;
+}
+
+.toggle_logout {
+	position: absolute;
+	width: 226px;
+	height: 60px;
+	left: 959px;
+	top: 131px;
+	background: #FFFFFF;
+	border-radius: 40px;
+	
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 40px;
+	line-height: 48px;
+	text-align: center;
+	
+	cursor: pointer;
+	display: none;
+}
+
+#memberId, #point {
+	position: relative;
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 40px;
+	line-height: 48px;
+	text-align: center;
+	
+	color: #000000;
+}

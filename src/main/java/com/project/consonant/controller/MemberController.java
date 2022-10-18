@@ -46,12 +46,21 @@ public class MemberController {
 		try {
 			member = memberSvc.login(member);
 			session.setAttribute("id", member.getMemberId());
+			session.setAttribute("point", member.getPoint());
+			session.setAttribute("rank", member.getRank());
 			return "home";
 		} catch (LoginException e) {
 			model.addAttribute("loginFailed", true);
 			model.addAttribute("e", e.getMessage());
 			return "loginForm";
 		}	
+	}
+	
+	/* 로그아웃 */
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "loginForm";
 	}
 	
 	/* 회원가입 */
