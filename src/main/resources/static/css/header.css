@@ -34,12 +34,18 @@ header {
 	background: #FFFFFF;
 	border-radius: 40px;
 	
+	cursor: pointer;
 }
 
-#memberId {
-	position: relative;
-	top: 10%;
-	left: 15%;
+.toggle_logout {
+	position: absolute;
+	width: 226px;
+	height: 60px;
+	left: 959px;
+	top: 131px;
+	background: #FFFFFF;
+	border-radius: 40px;
+	
 	font-family: 'Inter';
 	font-style: normal;
 	font-weight: 400;
@@ -47,13 +53,12 @@ header {
 	line-height: 48px;
 	text-align: center;
 	
-	color: #000000;
+	cursor: pointer;
+	display: none;
 }
 
-#point {
+#memberId, #point {
 	position: relative;
-	top: 10%;
-	left: 25%;
 	font-family: 'Inter';
 	font-style: normal;
 	font-weight: 400;

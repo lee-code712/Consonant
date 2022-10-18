@@ -4,13 +4,23 @@
 	xmlns:th="http://www.thymeleaf.org">
   
 	<header th:fragment="headerFragment">
+		<script th:inline="javascript">
+		  	$(function (){
+		  		$("#info").click(function (){
+		  	  	$("#logout").toggle();
+		  	  });
+		  	});
+  		</script>
+  	
 		<span class="title">
 			초성퀴즈
 		</span>
-		<div class="member_info">
-			<span id="memberId">솜솜님</span>
-			&nbsp;&nbsp;
-			<span id="point">100pt</span>
-		</div>
+		<table class="member_info" id="info">
+			<tr>
+				<td id="memberId" th:text="${session.id}">솜솜님</td>
+				<td id="point" th:text="${session.point} + 'pt'">100pt</td>
+			</tr>
+		</table>
+		<span class="toggle_logout" id="logout" onclick="location.href='/member/logout'">logout</span>
 	</header>
 </html>
