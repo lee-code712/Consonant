@@ -1,6 +1,6 @@
 header {
-	position: absolute;
-	width: 1440px;
+	position: relative;
+	width: 100%;
 	height: 217px;
 	
 	background: #FFF1AA;
@@ -28,7 +28,7 @@ header {
 	position: absolute;
 	width: 446px;
 	height: 70px;
-	left: 959px;
+	left: 995px;
 	top: 61px;
 	
 	background: #FFFFFF;
@@ -41,7 +41,7 @@ header {
 	position: absolute;
 	width: 226px;
 	height: 60px;
-	left: 959px;
+	left: 995px;
 	top: 131px;
 	background: #FFFFFF;
 	border-radius: 40px;

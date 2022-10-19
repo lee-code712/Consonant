@@ -1,0 +1,91 @@
+.homeWrap1 {
+	float: left;
+	margin-left: 30px;
+}
+
+.homeWrap2 {
+	float: left;
+	margin-left: 100px;
+}
+
+.game_table {
+	position: relative;
+	border-spacing: 30px;
+	margin: auto;
+}
+
+.rank_table {
+	position: relative;
+	border-spacing: 15px;
+	margin: auto;
+}
+
+.ranklist_table {
+	position: relative;
+	border-spacing: 15px;
+	margin: auto;
+	text-align: center;
+}
+
+.myrank {
+	width: 350px;
+	height: 84px;
+	background: #FFF1AA;
+	mix-blend-mode: normal;
+	border-radius: 30px;
+}
+
+.myrank_title, .myrank,
+.toprank_title {
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 40px;
+	line-height: 48px;
+	padding-left: 10px;
+	
+	color: #000000;
+}
+
+.toprank {
+	width: 350px;
+	height: 400px;
+	background: #FFF1AA;
+	border-radius: 30px;
+
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 30px;
+	line-height: 36px;
+	padding-left: 10px;
+	
+	color: #000000;
+}
+
+.create_quiz {
+	width: 880px;
+	height: 129px;
+}
+
+.quiz_game, .speed_game {
+	width: 426px;
+	height: 397px;
+}
+
+.create_quiz, .quiz_game,
+.speed_game {
+	mix-blend-mode: normal;
+	
+	background: #FFF1AA;
+	border-radius: 90px;
+	
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 50px;
+	line-height: 61px;
+	text-align: center;
+	
+	color: #000000;
+}
