@@ -1,8 +1,9 @@
-body {
-	position: relative;
-	width: 1440px;
-	height: 1024px;
-	margin: auto;
+* {
+	margin: 0;
+	padding: 0;
+}
 
+
+body {
 	background: #FFC01E;
 }

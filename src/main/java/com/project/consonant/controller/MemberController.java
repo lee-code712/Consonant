@@ -45,10 +45,12 @@ public class MemberController {
 		
 		try {
 			member = memberSvc.login(member);
-			session.setAttribute("id", member.getMemberId());
-			session.setAttribute("point", member.getPoint());
-			session.setAttribute("rank", member.getRank());
-			return "home";
+			
+			// 회원의 id, point, rank를 세션에 저장
+			member.setPasswd(null);
+			session.setAttribute("member", member);
+			
+			return "redirect:/home";
 		} catch (LoginException e) {
 			model.addAttribute("loginFailed", true);
 			model.addAttribute("e", e.getMessage());

@@ -17,8 +17,8 @@
 		</span>
 		<table class="member_info" id="info">
 			<tr>
-				<td id="memberId" th:text="${session.id}">솜솜님</td>
-				<td id="point" th:text="${session.point} + 'pt'">100pt</td>
+				<td id="memberId" th:text="${session.member.memberId}">솜솜님</td>
+				<td id="point" th:text="${session.member.point} + 'pt'">100pt</td>
 			</tr>
 		</table>
 		<span class="toggle_logout" id="logout" onclick="location.href='/member/logout'">logout</span>

@@ -8,11 +8,17 @@
 		<meta charset="UTF-8"/>
 		<title>consonant game</title>
 
-		<!-- 공통으로 사용할 css -->
+		<!-- 공통으로 사용할 css, js -->
 		<link th:href="@{/css/comm.css}" rel="stylesheet" />
 		<link th:href="@{/css/header.css}" rel="stylesheet" />
 		
-	    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		
+		<th:block layout:fragment="css">
+		</th:block>
+	
+		<th:block layout:fragment="script">
+		</th:block>
 	</th:block>
 	
 </html>
