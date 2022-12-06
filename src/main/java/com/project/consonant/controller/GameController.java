@@ -77,16 +77,17 @@ public class GameController {
 	public String insertQuiz(Model model, @Valid @RequestBody InputQuiz inputQuiz, BindingResult result) throws Exception{
 		//@ModelAttribute("inputQuiz")
 		//@RequestBody
+		
 		if (result.hasErrors()) {
 			//System.out.println("확인: " + inputQuiz.getQuestion() );
 			List<Category> categoryList = gameSvc.goCreateGame();
 			model.addAttribute("categoryList", categoryList);
-			return "createGame";
+			return "createGame::#insertQuizForm";
 		}
 		
 		List<InputQuiz> inputQuizList = gameSvc.insertQuiz(inputQuiz);
 		model.addAttribute("inputQuizList", inputQuizList);
-		return "createGame::#resultDiv";
+		return "createGame::#quizBox";
 	}
 	
 	@PostMapping("/removeQuiz")

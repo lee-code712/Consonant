@@ -65,7 +65,7 @@
 			</form>
 			
 			<!-- 추가된 퀴즈 -->
-			<div align="center">
+			<div align="center" id="quizBox">
 			<div layout:fragment="content" class="quizListBox" align="center" id="resultDiv">
 				<div>
 					<span class="insertQuizInfo">초성</span>
@@ -90,36 +90,35 @@
 				</div>
 				
 			</div>
-			</div>
-			
-			
+		
 			<!-- 퀴즈 추가 -->
-			<div align="center">
+
 			<div layout:fragment="content" class="quizInfoBoxBorder" align="left" style="padding-top: 7%">
 				<form th:object="${inputQuiz}" method="post" id="insertQuizForm">
 				<div style="width:100%">
 					<span class="quizText">초성</span>
-					<span><input type="text" class="consonantInputBox" id="consonant"/></span>
-					<div  style="color:red; padding-left:200px"></div>
+					<span><input type="text" class="consonantInputBox" id="consonant" th:field="*{question}"/></span>
+					<div id="consonantError" th:errors="*{question}" style="color:red; padding-left:200px"></div>
 					<span class="quizText">정답</span>
-					<span><input type="text" class="consonantInputBox" id="answer" /></span>
+					<span><input type="text" class="consonantInputBox" id="answer" th:field="*{answer}"/></span>
+					<div id="answerError" th:errors="*{answer}" style="color:red; padding-left:200px"></div>
 					<span class="quizText">난이도</span>
 					<span>
-						<select name="quizLevel" class="selectQuiz" id="quizLevel"  >
+						<select name="quizLevel" class="selectQuiz" id="quizLevel" th:field="*{quizDifficulty}">
 							<option value="3">상</option>
 							<option value="2">중</option>
 							<option value="1">하</option>
 						</select>
 					</span>
 					<button type="button" th:onclick="updateQuizList()" style="width:5%; font-size:70px; margin-top:10px">+</button> <!-- </span> -->
-				
 				</div>
 				<div style="margin-top:30px">
 					<span class="quizText">힌트</span>
-					<span><input type="text" class="consonantInputBox" id="quizHint" style="width:40%"/></span>	
+					<span><input type="text" class="consonantInputBox" id="quizHint" style="width:40%" th:field="*{hint}"/></span>	
+					<div id="hintError" th:errors="*{hint}" style="color:red; padding-left:200px"></div>
 					<span class="quizText">차감 포인트</span>
 					<span>
-						<select name="quizPoint" class="selectQuiz" id="hintPoint">
+						<select name="quizPoint" class="selectQuiz" id="hintPoint" th:field="*{hintPoint}">
 							<option value="10">10pt</option>
 						</select>
 					</span>
@@ -127,9 +126,6 @@
 				</form>
 				
 			</div>
-			
-			
-			
 		</div>
 		
 

@@ -28,12 +28,17 @@ function updateQuizList(){
 		type:"POST",
 	}).done(function(fragment){
 		console.log(fragment);
-		$("#resultDiv").replaceWith(fragment);
-		$("#consonant").val("");
-		$("#answer").val("");
-		$("#quizHint").val("");
-		$("#quizLevel").val("3");
-		$("#hintPoint").val("10");
+
+		if (fragment.includes("quizBox")) { // 퀴즈 추가 성공 시
+			$("#quizBox").replaceWith(fragment);
+			$("#consonant").val("");
+			$("#answer").val("");
+			$("#quizHint").val("");
+			$("#quizLevel").val("3");
+			$("#hintPoint").val("10");
+		} else { // 에러 발생 시
+			$("#insertQuizForm").replaceWith(fragment);
+		}
 	});
 	
 }
