@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.consonant.dao.mybatis.mapper.CategoryMapper">
+	<!-- 모든 카테고리 가져오기 -->
+	<select id="findAllCategory" resultType="Category">
+		SELECT category_id, category_name
+		FROM category
+	</select>
+</mapper>
