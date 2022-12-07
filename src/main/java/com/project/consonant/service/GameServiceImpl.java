@@ -14,6 +14,7 @@ import com.project.consonant.domain.CreateGameCommand;
 import com.project.consonant.domain.Game;
 import com.project.consonant.domain.InputQuiz;
 import com.project.consonant.domain.Quiz;
+import com.project.consonant.service.exception.GameException;
 
 @Service
 public class GameServiceImpl implements GameService{
@@ -27,6 +28,9 @@ public class GameServiceImpl implements GameService{
 	
 	public List<Category> goCreateGame() {
 		quizList = new ArrayList<>();
+		return categoryDao.findAllCategory();
+	}
+	public List<Category> getAllCategory(){
 		return categoryDao.findAllCategory();
 	}
 	public List<InputQuiz> insertQuiz(InputQuiz inputQuiz) {
@@ -52,12 +56,18 @@ public class GameServiceImpl implements GameService{
 		return quizList;
 	}
 	
+	public void setInputQuizList(List<InputQuiz> quizList) {
+		this.quizList = quizList;
+	}
 	public List<InputQuiz> getInputQuizList(){
 		return quizList;
 	}
 
 	@Transactional
-	public boolean createGame(CreateGameCommand createGameCommand, List<InputQuiz> inputQuizList) {
+	public boolean createGame(CreateGameCommand createGameCommand, List<InputQuiz> inputQuizList) throws GameException {
+		if (inputQuizList.size() == 0) {
+			throw new GameException("퀴즈를 추가해야 합니다.");
+		}
 		
 		Game game = new Game();
 		game.setMemberId(createGameCommand.getMemberId());

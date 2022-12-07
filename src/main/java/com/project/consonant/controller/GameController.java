@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.hibernate.validator.internal.constraintvalidators.bv.number.bound.decimal.DecimalMaxValidatorForCharSequence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,8 @@ import com.project.consonant.domain.CreateGameCommand;
 import com.project.consonant.domain.InputQuiz;
 import com.project.consonant.domain.Member;
 import com.project.consonant.service.GameService;
+import com.project.consonant.service.exception.GameException;
+import com.project.consonant.service.exception.LoginException;
 
 @Controller
 @RequestMapping("/game")
@@ -33,55 +36,60 @@ public class GameController {
 	
 	/*게임 만드는 화면으로 이동*/
 	@GetMapping("/createGame")
-	public ModelAndView goCreateGame(HttpSession session) throws Exception{
+	public String goCreateGame(Model model, HttpSession session) throws Exception{
 		Member memberInfo = (Member) session.getAttribute("member");
 		System.out.println(memberInfo.getMemberId());
 		List<Category> categoryList = gameSvc.goCreateGame();
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("memberInfo", memberInfo);
-		mav.addObject("categoryList", categoryList);
-		mav.addObject("createGameCommand", new CreateGameCommand());
-		mav.addObject("inputQuiz", new InputQuiz());
-		mav.setViewName("createGame");
-		return mav;
+		//ModelAndView mav = new ModelAndView();
+		model.addAttribute("memberInfo", memberInfo);
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("createGameCommand", new CreateGameCommand());
+		model.addAttribute("inputQuiz", new InputQuiz());
+		model.addAttribute("createGame");
+		
+		return "createGame";
 	}
-	
 	@PostMapping("/createGame")
-	public ModelAndView createGame(HttpSession session, @Valid @ModelAttribute("createGameCommand") CreateGameCommand createGameCommand, BindingResult result) throws Exception{
+	public ModelAndView createGame(HttpSession session, @Valid @ModelAttribute("createGameCommand") CreateGameCommand createGameCommand, BindingResult result, @ModelAttribute("inputQuiz") InputQuiz inputQuiz) throws Exception{
 		
 		Member memberInfo = (Member) session.getAttribute("member");
-		
+		ModelAndView mav = new ModelAndView();
 		if (result.hasErrors()) {
-			ModelAndView errorMav = new ModelAndView();
-			List<Category> categoryList = gameSvc.goCreateGame();
-			errorMav.addObject("categoryList", categoryList);
-			//errorMav.addObject("createGameCommand", new CreateGameCommand());
-			//errorMav.addObject("inputQuiz", new InputQuiz());
-			errorMav.setViewName("createGame");
-			return errorMav;
+			List<Category> categoryList = gameSvc.getAllCategory();
+			List<InputQuiz> inputQuizList = gameSvc.getInputQuizList();
+			mav.addObject("categoryList", categoryList);
+			mav.addObject("inputQuizList", inputQuizList);
+			mav.setViewName("createGame");
+		
+			return mav;
 		}
 		
 		//System.out.println(createGameCommand.getGameTitle() + " " + createGameCommand.getGameDifficulty());
-		List<InputQuiz> inputQuizList = gameSvc.getInputQuizList();
-		
-		createGameCommand.setMemberId(memberInfo.getMemberId());
-		System.out.println("아이디: " + createGameCommand.getMemberId() + " 퀴즈리스트 사이즈: "+inputQuizList.size());
-		boolean createResult = gameSvc.createGame(createGameCommand, inputQuizList);
+			
+		try {
+			List<InputQuiz> inputQuizList = gameSvc.getInputQuizList();
+			createGameCommand.setMemberId(memberInfo.getMemberId());
+			System.out.println("아이디: " + createGameCommand.getMemberId() + " 퀴즈리스트 사이즈: "+inputQuizList.size());
+			boolean createResult = gameSvc.createGame(createGameCommand, inputQuizList);
 		 // 리스트로 가도록 수정
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("home");
+			mav.setViewName("home");
+		}catch (GameException e) {
+			List<Category> categoryList = gameSvc.getAllCategory();
+			List<InputQuiz> inputQuizList = gameSvc.getInputQuizList();
+			mav.addObject("categoryList", categoryList);
+			mav.addObject("inputQuizList", inputQuizList);
+			mav.addObject("createFailed", true);
+			mav.addObject("e", e.getMessage());
+			mav.setViewName("createGame");
+			return mav;
+		}	
 		return mav;
 	}
-	
 	@PostMapping("/insertQuiz")
-	public String insertQuiz(Model model, @Valid @RequestBody InputQuiz inputQuiz, BindingResult result) throws Exception{
-		//@ModelAttribute("inputQuiz")
-		//@RequestBody
+	public String insertQuiz(Model model, @Valid @RequestBody InputQuiz inputQuiz, BindingResult result, @ModelAttribute("createGameCommand") CreateGameCommand createGameCommand) throws Exception{
+
 		
 		if (result.hasErrors()) {
-			//System.out.println("확인: " + inputQuiz.getQuestion() );
-			List<Category> categoryList = gameSvc.goCreateGame();
-			model.addAttribute("categoryList", categoryList);
 			return "createGame::#insertQuizForm";
 		}
 		
