@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.consonant.dao.mybatis.mapper.GameMapper">
+	<!-- 게임 등록 -->
+	<insert id="createGame" parameterType="Game">
+		<selectKey keyProperty="gameNo" resultType="int" order="BEFORE">
+			SELECT game_no_seq.nextval as game_no FROM DUAL
+		</selectKey>
+		
+		INSERT INTO GAME_INFO (game_no, game_title, game_intro, game_difficulty, quiz_number, game_score, category_id, member_id)
+		VALUES(#{gameNo}, #{gameTitle}, #{gameIntro}, #{gameDifficulty}, #{quizNumber}, #{gameScore}, #{category}, #{memberId})
+	
+	</insert>
+	
+	<!-- 게임 등록시 퀴즈 등록 -->
+	<insert id="createQuiz" parameterType="Quiz">
+		<selectKey keyProperty="quizNo" resultType="int" order="BEFORE">
+			SELECT quiz_no_seq.nextval as quiz_no FROM DUAL
+		</selectKey>
+		
+		INSERT INTO QUIZ (quiz_no, question, answer, quiz_difficulty, hint, hint_point, game_no)
+		VALUES(#{quizNo}, #{question}, #{answer}, #{quizDifficulty}, #{hint}, #{hintPoint}, #{gameNo})
+	</insert>
+</mapper>
+
+

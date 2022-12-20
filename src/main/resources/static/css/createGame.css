@@ -1,0 +1,163 @@
+.createTitle{
+	position: relative;
+	top: 60px;
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 900;
+	font-size: 50px;
+	line-height: 85px;
+	text-align: center;
+	
+	color: #000000;
+	
+}
+.btnCreateGame{
+	position: absolute;
+	width: 180px;
+	height: 70px;
+	right:5%;
+	top: 67px;
+	
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 30px;
+	line-height: 61px;
+	text-align: center;
+
+	color: #000000;
+	
+	background: #FFF1AA;
+	border-radius: 50px;
+}
+.gameInfoBoxBorder{
+	box-sizing: border-box;
+
+	position: relative;
+	width: 90%;
+	height: 500px;
+	
+	top: 100px;
+	
+	mix-blend-mode: normal;
+	border: 8px solid #FFFFFF;
+	border-radius: 30px;
+}
+.quizText{
+	position: relative;
+	margin-left: 3%;
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 20px;
+	text-align: center;
+	
+	color: #000000;
+}
+.quizNameInputBox{
+	position: relative;
+	width: 80%;
+	height: 50px;
+	padding-left: 50px;
+	margin-left: 50px;
+	
+	font-size:20px;
+	
+	background: #FFFFFF;
+	filter: blur(0.2px);
+	border-radius: 50px;
+	box-shadow: none;
+}
+
+
+.quizSelectBox{
+	position: relative;
+	display: inline-block;
+	height: 50px;
+	width: 30%;
+	padding-left:30px;
+}
+.selectGame{
+	width:100%;
+	height:50px;
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 20px;
+	text-align: center;
+	border-radius: 50px;
+	
+ }
+.quizIntroArea{
+	position: absolute;
+	width: 80%;
+	height: 38%;
+	padding-left:50px;
+	margin:20px;
+	font-size:20px;
+	
+	background: #FFFFFF;
+	filter: blur(0.2px);
+	border-radius: 50px;
+	box-shadow: none;
+}
+.consonantInputBox{
+	position: relative;
+	width: 18%;
+	height: 50px;
+	padding-left: 3%;
+	margin-left: 3%;
+	
+	font-size:20px;
+	
+	background: #FFFFFF;
+	filter: blur(0.2px);
+	border-radius: 50px;
+	box-shadow: none;
+}
+.selectQuiz{
+	width:20%;
+	height:50px;
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 20px;
+	text-align: center;
+	border-radius: 50px;
+	
+	
+ }
+ .quizListBox{
+ 	position: relative;
+	width: 90%;
+	height: auto;
+	padding: 20px;
+	margin-top: 150px;
+	
+	background: #FFF29E;
+	border-radius: 90px;
+ }
+ .quizInfoBoxBorder{
+ 	box-sizing: border-box;
+
+	position: relative;
+	width: 90%;
+	height: auto;
+	mix-blend-mode: normal;
+	border: 8px solid transparent;
+	border-radius: 30px;
+}
+
+.insertQuizInfo{
+	display:table-cell;
+	width:150px;
+}
+
+.inputQuizBtn{
+	width:5%; 
+	font-size:50px; 
+	
+	background-color:transparent; 
+	border:0px; 
+	outline:0px
+}

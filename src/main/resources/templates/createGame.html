@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title>consonant game</title>
+	</head>
+	
+	<th:block layout:fragment="css">
+		<link th:href="@{/css/comm.css}" rel="stylesheet" />
+		<link th:href="@{/css/createGame.css}" rel="stylesheet" />
+	</th:block>
+	
+	<th:block layout:fragment="script">
+	</th:block>
+
+	<body>
+		
+		<div>
+			<div layout:fragment="content" align="center">
+				<span class='createTitle'>퀴즈만들기</span>
+			</div>
+			<div align="right">
+				<button class='btnCreateGame' th:onclick='createGame()'>문제등록</button>
+			</div>
+		</div>
+		
+		<form th:object="${createGameCommand}" th:action="@{/game/createGame}" method="post" id="createGameForm">
+		<div align="center">
+			<div layout:fragment="content" class="gameInfoBoxBorder" align="left">
+				<div style="padding-top:30px">
+					<span class="quizText">퀴즈명</span>
+					<span><input type="text" class="quizNameInputBox" th:field="*{gameTitle}"></span>
+					<div th:errors="*{gameTitle}" style="color:red; padding-left:200px"></div>
+				</div>
+				<div style="padding-top:40px">
+					<span class="quizText">카테고리</span>
+					<span class="quizSelectBox" >
+						<select th:field="*{category}" class="selectGame">
+							<option th:each="category : ${categoryList}" th:value="${category.categoryId}" th:text="${category.categoryName}"></option>	
+						</select>
+					</span>
+					<span class="quizText" style="padding-left:10%">난이도</span>
+					<span class="quizSelectBox" >
+						<select th:field="*{gameDifficulty}" class="selectGame" >
+							<option value="3">상</option>
+							<option value="2">중</option>
+							<option value="1">하</option>
+						</select>
+	
+					</span>
+				</div>
+				<div style="padding-top:40px; height:40%; ">
+					<div th:errors="*{gameIntro}" style="color:red; padding-left:200px"></div>
+					<div>
+						<span class="quizText">퀴즈소개</span>
+						<span><textarea class="quizIntroArea" th:field="*{gameIntro}"></textarea></span>
+					</div>
+				</div>
+			</div>
+			</div>
+			</form>
+			
+			
+			<!-- 추가된 퀴즈 -->
+			<div align="center" id="quizBox">
+			<div layout:fragment="content" class="quizListBox" align="center" id="resultDiv">
+				<div>
+					<span class="insertQuizInfo">초성</span>
+					<span class="insertQuizInfo">정답</span>
+					<span class="insertQuizInfo">난이도</span>
+					<span class="insertQuizInfo">힌트</span>
+					<span class="insertQuizInfo">차감 포인트</span>
+					<span class="insertQuizInfo">삭제</span>
+				</div>
+				
+				<div th:each="inputQuiz : ${inputQuizList}">
+				<form th:id="|formId${inputQuiz.question}|">
+					<span class="insertQuizInfo" id="insertedQuestion" th:text="${inputQuiz.question}"></span>
+					<span class="insertQuizInfo" id="insertedAnswer" th:text="${inputQuiz.answer}"></span>
+					<span class="insertQuizInfo" id="insertedDifficulty" th:if="${inputQuiz.quizDifficulty == 3}">상</span>
+					<span class="insertQuizInfo" id="insertedDifficulty" th:if="${inputQuiz.quizDifficulty == 2}">중</span>
+					<span class="insertQuizInfo" id="insertedDifficulty" th:if="${inputQuiz.quizDifficulty == 1}">하</span>
+					<span class="insertQuizInfo" id="insertedHint" th:text="${inputQuiz.hint}"></span>
+					<span class="insertQuizInfo" id="insertedHintPoint" th:text="|${inputQuiz.hintPoint}pt|"></span>
+					<span class="insertQuizInfo"><a href="#" th:name="|formId${inputQuiz.question}|" th:onclick="removeQuiz(this.getAttribute('name'))">-</a></span>
+				</form>
+				</div>
+				
+			</div>
+		
+			<!-- 퀴즈 추가 -->
+			<div align="right" style="padding-right:5%">
+				<span style="color:red" th:if="${createFailed}" th:text="${e}"></span>
+			</div>
+			<div layout:fragment="content" class="quizInfoBoxBorder" align="left" style="padding-top: 7%">
+				<form th:object="${inputQuiz}" method="post" id="insertQk souizForm">
+				<div>
+					<span id="consonantError" th:errors="*{question}" style="color:red; padding-left:12%"></span>
+					<span id="answerError" th:errors="*{answer}" style="color:red; padding-left:12%"></span>
+				</div>
+				<div style="width:100%">
+					<span class="quizText">초성</span>
+					<span><input type="text" class="consonantInputBox" id="consonant" th:field="*{question}"/></span>
+					<span class="quizText">정답</span>
+					<span><input type="text" class="consonantInputBox" id="answer" th:field="*{answer}"/></span>
+					<span class="quizText">난이도</span>
+					<span>
+						<select name="quizLevel" class="selectQuiz" id="quizLevel" th:field="*{quizDifficulty}">
+							<option value="3">상</option>
+							<option value="2">중</option>
+							<option value="1">하</option>
+						</select>
+					</span>
+					<button type="button" th:onclick="updateQuizList()" class="inputQuizBtn">+</button>
+				</div>
+				<div style="margin-top:2%">
+					<span id="hintError" th:errors="*{hint}" style="color:red; padding-left:10%"></span>
+				</div>
+				<div style="margin-top:2%">
+					<span class="quizText">힌트</span>
+					<span><input type="text" class="consonantInputBox" id="quizHint" style="width:40%" th:field="*{hint}"/></span>	
+					<span class="quizText">차감 포인트</span>
+					<span>
+						<select name="quizPoint" class="selectQuiz" id="hintPoint" th:field="*{hintPoint}">
+							<option value="10">10pt</option>
+						</select>
+					</span>
+				</div>
+				</form>
+				
+			</div>
+		</div>
+		
+
+		<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+		<script th:src="@{/js/createGame.js}"></script>
+	</body>
+</html>
