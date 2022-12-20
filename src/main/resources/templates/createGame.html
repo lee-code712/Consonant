@@ -97,7 +97,7 @@
 				<span style="color:red" th:if="${createFailed}" th:text="${e}"></span>
 			</div>
 			<div layout:fragment="content" class="quizInfoBoxBorder" align="left" style="padding-top: 7%">
-				<form th:object="${inputQuiz}" method="post" id="insertQuizForm">
+				<form th:object="${inputQuiz}" method="post" id="insertQk souizForm">
 				<div>
 					<span id="consonantError" th:errors="*{question}" style="color:red; padding-left:12%"></span>
 					<span id="answerError" th:errors="*{answer}" style="color:red; padding-left:12%"></span>
