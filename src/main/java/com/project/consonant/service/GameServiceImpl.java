@@ -24,7 +24,7 @@ public class GameServiceImpl implements GameService{
 	@Autowired
 	GameDao gameDao;
 	
-	List<InputQuiz> quizList = new ArrayList<>(); 
+	List<InputQuiz> quizList = new ArrayList<>();  //게임 생성에 필요한 퀴즈를 저장해둠
 	
 	public List<Category> goCreateGame() {
 		quizList = new ArrayList<>();
@@ -65,7 +65,7 @@ public class GameServiceImpl implements GameService{
 
 	@Transactional
 	public boolean createGame(CreateGameCommand createGameCommand, List<InputQuiz> inputQuizList) throws GameException {
-		if (inputQuizList.size() == 0) {
+		if (inputQuizList.size() == 0) { //추가된 퀴즈의 개수가 0개일때 게임 생성 불가
 			throw new GameException("퀴즈를 추가해야 합니다.");
 		}
 		

@@ -49,6 +49,8 @@ public class GameController {
 		
 		return "createGame";
 	}
+	
+	//게임 생성-등록
 	@PostMapping("/createGame")
 	public ModelAndView createGame(HttpSession session, @Valid @ModelAttribute("createGameCommand") CreateGameCommand createGameCommand, BindingResult result, @ModelAttribute("inputQuiz") InputQuiz inputQuiz) throws Exception{
 		
@@ -85,6 +87,8 @@ public class GameController {
 		}	
 		return mav;
 	}
+	
+	//게임 생성할때 퀴즈 추가
 	@PostMapping("/insertQuiz")
 	public String insertQuiz(Model model, @Valid @RequestBody InputQuiz inputQuiz, BindingResult result, @ModelAttribute("createGameCommand") CreateGameCommand createGameCommand) throws Exception{
 
@@ -98,6 +102,7 @@ public class GameController {
 		return "createGame::#quizBox";
 	}
 	
+	//게임 생성할때 추가했던 퀴즈 삭제
 	@PostMapping("/removeQuiz")
 	public String removeQuiz(Model model, @RequestBody String question) throws Exception{
 		ObjectMapper mapper = new ObjectMapper();
