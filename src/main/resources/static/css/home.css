@@ -66,11 +66,15 @@
 .create_quiz {
 	width: 880px;
 	height: 129px;
+	
+	cursor: pointer;
 }
 
 .quiz_game, .speed_game {
 	width: 426px;
 	height: 397px;
+	
+	cursor: pointer;
 }
 
 .create_quiz, .quiz_game,
