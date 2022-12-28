@@ -34,6 +34,7 @@ public class GameController {
 	@Autowired
 	GameService gameSvc;
 	
+	//게임 생성
 	/*게임 만드는 화면으로 이동*/
 	@GetMapping("/createGame")
 	public String goCreateGame(Model model, HttpSession session) throws Exception{
@@ -45,7 +46,7 @@ public class GameController {
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("createGameCommand", new CreateGameCommand());
 		model.addAttribute("inputQuiz", new InputQuiz());
-		model.addAttribute("createGame");
+		//model.addAttribute("createGame");
 		
 		return "createGame";
 	}
@@ -111,4 +112,22 @@ public class GameController {
 		model.addAttribute("inputQuizList", inputQuizList);
 		return "createGame::#resultDiv";
 	}
+	
+	
+	
+	
+	
+	//게임 리스트
+	@GetMapping("/gameList")
+	public String goGameList(Model model, HttpSession session) throws Exception{
+		Member memberInfo = (Member) session.getAttribute("member");
+		System.out.println(memberInfo.getMemberId());
+		List<Category> categoryList = gameSvc.getAllCategory();
+		
+		model.addAttribute("memberInfo", memberInfo);
+		model.addAttribute("categoryList", categoryList);
+		
+		return "gameList";
+	}
+	
 }

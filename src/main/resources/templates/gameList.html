@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/comm/layout}">
+	
+	<head>
+		<meta charset="UTF-8" />
+		<title>Consonant Game List</title>
+	</head>
+	
+	<th:block layout:fragment="css">
+		<link th:href="@{/css/comm.css}" rel="stylesheet" />
+		<link th:href="@{/css/gameList.css}" rel="stylesheet" />
+	</th:block>
+	
+	<th:block layout:fragment="script">
+	</th:block>
+	
+
+	
+	<div layout:fragment="content" align="center">
+		<div class="divForButtons">
+			<button class='btnGameList' type="button" style="margin-right:2%;">튜토리얼</button>
+			<button class='btnGameList' type="button" onclick="location.href='/game/createGame'">문제등록</button>
+		</div>
+		<div class="divForSelect">	
+			<select class="selectGame">
+				<option th:each="category : ${categoryList}" th:value="${category.categoryId}" th:text="${category.categoryName}"></option>	
+			</select>
+		</div>
+	
+		<div class="quizInfoBox">
+			<table class="quizInfoTable">
+				<tr>
+					<td class="quizNameTd">퀴즈명</td>
+					<td class="scoreTd">내 점수: 60 / 총점: 100</td>
+					<td style="width:15%;" rowspan="2"><button class='btnGameStart' type="button">시작</button></td>
+				</tr>
+				<tr>
+					<td>퀴즈소개</td>
+					<td>난이도: 상 / 문제 개수: 5</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	
+	
+	
+</html>
