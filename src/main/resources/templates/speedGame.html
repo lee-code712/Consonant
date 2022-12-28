@@ -9,15 +9,23 @@
 		<title>speed game</title>
 	</head>
 	
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	
 	<th:block layout:fragment="css">
 		<link th:href="@{/css/comm.css}" rel="stylesheet" />
+		<link th:href="@{/css/speedGame.css}" rel="stylesheet" />
 	</th:block>
 	
 	<th:block layout:fragment="script">
+		<script src="/js/speedGame.js"></script>
 	</th:block>
 	
-	<div layout:fragment="content">		
+	<div layout:fragment="content">
+		<div class="gameWrap1" id="timer">
+			제한시간<br/>60
+		</div>
 		스피드 게임 화면!
+		[[${randomConsonants}]]
 	</div>
 
 </html>

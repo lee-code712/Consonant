@@ -1,0 +1,16 @@
+.gameWrap1 {
+	position: absolute;
+	width: 211px;
+	height: 140px;
+	left: 1203px;
+	top: 47px;
+	
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 600;
+	font-size: 50px;
+	line-height: 61px;
+	text-align: center;
+
+	color: #000000;
+}
