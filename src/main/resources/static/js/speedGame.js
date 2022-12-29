@@ -15,7 +15,7 @@ window.onload = function() {
 	});
 	
 	// 초성이 2개인 경우 td에 colspan 속성 추가
-	if (consonantSize == 2) {
+	if (consonants.length == 2) {
 		let tdList = document.querySelectorAll(".game_table td");
 		tdList.forEach(function(td) {
 			if (td.getAttribute("class") == "question") {
@@ -54,7 +54,7 @@ function checkAnswer() {
 		return;
 	}
 	// 글자 수 확인
-	if (answer.length != consonantSize) {
+	if (answer.length != consonants.length) {
 		alert("글자 수가 다릅니다.");
 		input.value = "";
 		return;
