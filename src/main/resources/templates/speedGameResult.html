@@ -11,14 +11,32 @@
 	
 	<th:block layout:fragment="css">
 		<link th:href="@{/css/comm.css}" rel="stylesheet" />
+		<link th:href="@{/css/speedGameResult.css}" rel="stylesheet" />
 	</th:block>
 	
 	<th:block layout:fragment="script">
 	</th:block>
 	
 	<div layout:fragment="content">
-		결과화면!
-		[[${resultMap}]]
+		<div class="titleWrap">
+			게임 결과
+		</div>
+		<div class="line"></div>
+		<div class="resultWrap">
+			<p class="result" th:each="result, stat : ${resultMap}" th:id="${result.key}" th:onclick="viewDesc([[${result.key}]])">
+				<th:block th:if="${result.value == 'X'}">[[${stat.count}]]. [[${result.key}]] [[${result.value}]]</th:block>
+				<th:block th:unless="${result.value == 'X'}">[[${stat.count}]]. [[${result.key}]] O</th:block>
+			</p>
+		</div>
 	</div>
-
+	
+	<th:block layout:fragment="script">
+		<script src="/js/speedGameResult.js"></script>
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			const results = /*[[${resultMap}]]*/ + "";
+			/*]]>*/
+		</script>
+	</th:block>
+	
 </html>

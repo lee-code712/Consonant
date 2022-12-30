@@ -39,12 +39,11 @@ public class SpeedGameController {
 			@ModelAttribute("consonants") List<String> consonants, Model model) {
 		List<String> answerList = new ArrayList<String>(answers); // 중복을 제거한 set을 list로 변경
 		
-		// 답변 인정여부 체크
+		// 입력한 단어 체크
 		Map<String, String> resultMap = speedGameSvc.checkConsonants(consonants, answerList);
-		System.out.println(resultMap);
 		
 		if (resultMap != null) {
-			// 값이 T인 답변의 수 만큼 포인트 추가
+			// 값이 X가 아닌 개수 10개당 10포인트 부여, 랭킹 갱신
 			
 			model.addAttribute("resultMap", resultMap);
 		}

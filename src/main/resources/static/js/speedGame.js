@@ -1,5 +1,6 @@
 let setTime = 60;	// 최초 설정 시간(기본 : 초)
 let answerList = [];
+const regex = /^[가-힣|]+$/;
 
 window.onload = function() { 
 	// 게임 타이머 설정
@@ -53,9 +54,15 @@ function checkAnswer() {
 		input.value = "";
 		return;
 	}
+	// 한글인지 확인
+	if (!regex.test(answer)) {
+		alert("한글만 입력할 수 있습니다.");
+		input.value = "";
+		return;
+	}
 	// 글자 수 확인
 	if (answer.length != consonants.length) {
-		alert("글자 수가 다릅니다.");
+		alert("글자 수가 맞지 않습니다.");
 		input.value = "";
 		return;
 	}
@@ -80,11 +87,11 @@ function addAnswer(answer) {
 }
 
 function sendAnswer() {
-	var form = document.createElement("form");
+	let form = document.createElement("form");
     form.setAttribute("method", "post");
     form.setAttribute("action", "/game/speed/resultGame");
 
-    var hiddenField = document.createElement("input");
+    let hiddenField = document.createElement("input");
     hiddenField.setAttribute("type",  "hidden");
     hiddenField.setAttribute("name", "consonants");
     hiddenField.setAttribute("value", consonants);
