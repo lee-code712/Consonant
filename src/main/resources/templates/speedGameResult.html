@@ -22,11 +22,17 @@
 			게임 결과
 		</div>
 		<div class="line"></div>
-		<div class="resultWrap">
-			<p class="result" th:each="result, stat : ${resultMap}" th:id="${result.key}" th:onclick="viewDesc([[${result.key}]])">
-				<th:block th:if="${result.value == 'X'}">[[${stat.count}]]. [[${result.key}]] [[${result.value}]]</th:block>
-				<th:block th:unless="${result.value == 'X'}">[[${stat.count}]]. [[${result.key}]] O</th:block>
-			</p>
+		<div class="contentWrap">
+			<div class="resultWrap">
+				<p class="result" th:each="result, stat : ${resultMap}" th:id="${result.key}" th:onclick="viewDesc([[${result.key}]])">
+					<th:block th:if="${result.value == 'X'}">[[${stat.count}]]. [[${result.key}]] [[${result.value}]]</th:block>
+					<th:block th:unless="${result.value == 'X'}">[[${stat.count}]]. [[${result.key}]] O</th:block>
+				</p>
+			</div>
+			<div class="pointWrap">
+				<div class="circle"><div class="innerCircle" id="viewCount">/[[${#maps.size(resultMap)}]]</div></div>
+				<div class="point" id="viewPoint"></div>
+			</div>
 		</div>
 	</div>
 	

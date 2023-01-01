@@ -30,17 +30,24 @@
 	background: #FAF9F9;
 }
 
-.resultWrap {
+.contentWrap {
 	position: absolute;
-	left: 138px;
+	width: 100%;
+	margin: 0 auto;
 	top: 201px;
+}
+
+.resultWrap {
+	position: relative;
+	float: left;
+	width: 50%;
 }
 
 .result {
 	position: relative;
-	float: left;
-	width: 50%;
+	width: 70%;
 	margin: 2%;
+	left: 10%;
 	height: 56px;
 	
 	background: #FAF9F9;
@@ -61,7 +68,66 @@
 
 .desc {
 	position: relative;
-	float: left;
-	width: 50%;
+	width: 70%;
 	margin: 2%;
+	left: 10%;
+}
+
+.pointWrap {
+	position: relative;
+	float: right;
+	width: 50%;
+}
+
+.circle {
+	position: relative;
+	margin: auto;
+	padding-top: 3%;
+	width: 358px;
+	height: 358px;
+	
+	box-sizing: border-box;
+
+	border: 5px solid #FAF9F9;
+	border-radius: 50%;
+}
+
+.innerCircle {
+	position: relative;
+	margin: auto;
+	width: 300px;
+	height: 300px;
+
+	background: #FAF9F9;
+	border-radius: 50%;
+	
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 70px;
+	line-height: 300px;
+	text-align: center;
+	
+	color: #000000;
+		
+}
+
+.point {
+	position: relative;
+	margin: 2% auto;
+	width: 397px;
+	height: 82px;
+	
+	background: #FAF9F9;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 20px;
+	
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 40px;
+	line-height: 82px;
+	text-align: center;
+	
+	color: #000000;
 }

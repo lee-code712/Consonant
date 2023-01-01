@@ -1,5 +1,21 @@
 window.onload = function() {
-
+	// 맞춘 개수 출력
+	let correctCount = 0;
+	
+	let keys = Object.keys(results);
+	for (i = 0; i < keys.length; i++) {
+		if (results[keys[i]] != "X") {
+			correctCount++;
+		}
+	}
+	
+	const viewCount = document.getElementById("viewCount");
+	viewCount.innerText = correctCount + viewCount.innerText;
+	
+	// 획득 포인트 출력
+	let getPoint = correctCount;
+	const viewPoint = document.getElementById("viewPoint");
+	viewPoint.innerText = "+" + getPoint;
 };
 
 function viewDesc (key) {
