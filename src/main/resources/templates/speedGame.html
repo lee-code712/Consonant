@@ -9,15 +9,57 @@
 		<title>speed game</title>
 	</head>
 	
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	
 	<th:block layout:fragment="css">
 		<link th:href="@{/css/comm.css}" rel="stylesheet" />
+		<link th:href="@{/css/speedGame.css}" rel="stylesheet" />
 	</th:block>
+	
+	<div layout:fragment="content">
+		<div class="gameWrap1" id="timer">
+			제한시간<br/>60
+		</div>
+		<div class="gameWrap2">
+			<table class="game_table">
+				<tr>
+					<td class="title">제시어</td>
+				</tr>
+				<tr>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="question" th:each="consonant : ${randomConsonants}">
+						<p th:if="${#lists.size(randomConsonants) == 1}" class="consonant1">[[${consonant}]]</p>
+						<p th:if="${#lists.size(randomConsonants) == 2}" class="consonant2">[[${consonant}]]</p>
+					</td>
+				</tr>
+				<tr>
+					<td class="answers" id="viewAnswer"></td>
+				</tr>
+				<tr>
+					<td>
+						<div class="answer_div">
+							<input type="text" id="answer"></input>
+						</div>
+						<div class="answer_div">
+							<button type="button" class="answer_btn" id="answer_btn" onclick="checkAnswer()">
+								<img src="/images/check_mark.svg">
+							</button>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
 	
 	<th:block layout:fragment="script">
+		<script src="/js/speedGame.js"></script>
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			const consonants = /*[[${randomConsonants}]]*/ + "";
+			/*]]>*/
+		</script>
 	</th:block>
-	
-	<div layout:fragment="content">		
-		스피드 게임 화면!
-	</div>
 
 </html>
