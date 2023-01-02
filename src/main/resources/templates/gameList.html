@@ -17,7 +17,7 @@
 	<th:block layout:fragment="script">
 	</th:block>
 	
-
+	
 	
 	<div layout:fragment="content" align="center">
 		<div class="divForButtons">
@@ -25,22 +25,24 @@
 			<button class='btnGameList' type="button" onclick="location.href='/game/createGame'">문제등록</button>
 		</div>
 		<div class="divForSelect">	
-			<select class="selectGame">
+			<select class="selectGame" onchange="changeCategory(this.value)">
 				<option th:each="category : ${categoryList}" th:value="${category.categoryId}" th:text="${category.categoryName}"></option>	
 			</select>
 		</div>
 	 
-		<div class="gameListDiv">
+		<div class="gameListDiv" id="gameListDiv">
 		<div th:each="game : ${gameList}" class="quizInfoBox">
 			<table class="quizInfoTable">
 				<tr>
 					<td class="quizNameTd" th:text="${game.gameTitle}">퀴즈명</td>
-					<td class="scoreTd">내 점수: 60 / 총점: 100</td>
+					<td class="scoreTd" th:text="|내 점수: ${game.score} / 총점: ${game.gameScore}|">내 점수: 60 / 총점: 100</td>
 					<td style="width:15%;" rowspan="2"><button class='btnGameStart' type="button">시작</button></td>
 				</tr>
 				<tr>
-					<td>퀴즈소개</td>
-					<td>난이도: 상 / 문제 개수: 5</td>
+					<td th:text="${game.gameIntro}"></td>
+					<td th:if="${game.gameDifficulty == 3}" th:text="|난이도: 상 / 문제 개수: ${game.quizNumber}|"></td>
+					<td th:if="${game.gameDifficulty == 2}" th:text="|난이도: 중 / 문제 개수: ${game.quizNumber}|"></td>
+					<td th:if="${game.gameDifficulty == 1}" th:text="|난이도: 하 / 문제 개수: ${game.quizNumber}|"></td>
 				</tr>
 			</table>
 		</div>
@@ -49,4 +51,9 @@
 	
 	
 	
+	<!--  <script th:src="@{/js/gameList.js}"></script> -->
+	<th:block layout:fragment="script">
+		<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+		<script src="/js/gameList.js"></script>
+	</th:block>
 </html>

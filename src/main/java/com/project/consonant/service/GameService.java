@@ -17,5 +17,6 @@ public interface GameService {
 	List<InputQuiz> getInputQuizList();
 	void setInputQuizList(List<InputQuiz> quizList);
 	
-	List<Game> findAllGames();
+	List<Game> findAllGames(String memberId);
+	List<Game> findAllGamesByCategory(String memberId, String categoryId);
 }

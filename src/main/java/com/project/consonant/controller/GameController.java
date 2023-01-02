@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -131,8 +132,8 @@ public class GameController {
 		Member memberInfo = (Member) session.getAttribute("member");
 		System.out.println(memberInfo.getMemberId());
 		List<Category> categoryList = gameSvc.getAllCategory();
-		List<Game> gameList = gameSvc.findAllGames();
-		
+		List<Game> gameList = gameSvc.findAllGames(memberInfo.getMemberId());
+	
 		model.addAttribute("memberInfo", memberInfo);
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("gameList", gameList);
@@ -140,4 +141,18 @@ public class GameController {
 		return "gameList";
 	}
 	
+	//카테고리별 게임 리스트
+	@GetMapping("/category/gameList")
+	public String gameListByCategory(Model model, HttpSession session, String categoryId) throws Exception{
+		Member memberInfo = (Member) session.getAttribute("member");
+		System.out.println(memberInfo.getMemberId());
+		List<Category> categoryList = gameSvc.getAllCategory();
+		List<Game> gameList = gameSvc.findAllGamesByCategory(memberInfo.getMemberId(), categoryId);
+		
+		model.addAttribute("memberInfo", memberInfo);
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("gameList", gameList);
+			
+		return "gameList::#gameListDiv";
+	}
 }

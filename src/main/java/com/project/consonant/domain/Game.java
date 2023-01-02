@@ -19,5 +19,6 @@ public class Game implements Serializable{
 	private String categoryId;
 	@NotBlank
 	private String memberId;
+	private int score; //로그인한 회원이 받았던 점수
 
 }

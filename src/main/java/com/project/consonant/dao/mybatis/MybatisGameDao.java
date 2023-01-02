@@ -29,9 +29,13 @@ public class MybatisGameDao implements GameDao{
 
 	
 	@Override
-	public List<Game> findAllGames(){
-		return gameMapper.findAllGames();
+	public List<Game> findAllGames(String memberId){
+		return gameMapper.findAllGames(memberId);
 	}
 	
+	@Override
+	public List<Game> findAllGamesByCategory(String memberId, String categoryId){
+		return gameMapper.findAllGamesByCategory(memberId, categoryId);
+	}
 	
 }

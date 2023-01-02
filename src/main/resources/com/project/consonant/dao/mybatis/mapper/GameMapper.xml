@@ -25,8 +25,20 @@
 	
 	<!-- 게임 목록 가져오기 -->
 	<select id="findAllGames" resultType="Game">
-		SELECT game_no, game_title, game_intro, game_difficulty, quiz_number, game_score, category_id, member_id
-		FROM game_info
+		SELECT g.game_no, g.game_title, g.game_intro, g.game_difficulty, g.quiz_number, g.game_score, g.category_id, g.member_id,
+				COALESCE(h.score, 0) AS score
+		FROM game_info g LEFT OUTER JOIN (SELECT history.score, history.game_no, history.member_id FROM history WHERE history.member_id = #{memberId}) h
+		ON g.game_no = h.game_no
+	</select>
+	
+	
+	<!--카테고리별 게임 목록 가져오기 -->
+	<select id="findAllGamesByCategory" resultType="Game">
+		SELECT g.game_no, g.game_title, g.game_intro, g.game_difficulty, g.quiz_number, g.game_score, g.category_id, g.member_id,
+				COALESCE(h.score, 0) AS score
+		FROM game_info g LEFT OUTER JOIN (SELECT history.score, history.game_no, history.member_id FROM history WHERE history.member_id = #{memberId}) h
+		ON g.game_no = h.game_no
+		WHERE g.category_id = #{categoryId}
 	</select>
 </mapper>
 
