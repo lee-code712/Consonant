@@ -75,12 +75,14 @@ public class GameController {
 			createGameCommand.setMemberId(memberInfo.getMemberId());
 			//System.out.println("아이디: " + createGameCommand.getMemberId() + " 퀴즈리스트 사이즈: "+inputQuizList.size());
 			boolean createResult = gameSvc.createGame(createGameCommand, inputQuizList);
-			
+		
 			if(createResult == true) {
 				memberSvc.updatePoint(memberInfo.getMemberId(), 50, 1);
+				Member newMemberInfo = memberSvc.findMember(memberInfo.getMemberId());
+				session.setAttribute("member", newMemberInfo);
 			}
 		 // 리스트로 가도록 수정
-			mav.setViewName("home");
+			mav.setViewName("redirect:/home");
 		}catch (GameException e) {
 			List<Category> categoryList = gameSvc.getAllCategory();
 			List<InputQuiz> inputQuizList = gameSvc.getInputQuizList();
@@ -88,7 +90,7 @@ public class GameController {
 			mav.addObject("inputQuizList", inputQuizList);
 			mav.addObject("createFailed", true);
 			mav.addObject("e", e.getMessage());
-			mav.setViewName("createGame");
+			mav.setViewName("redirect:/game/createGame");
 			return mav;
 		}	
 		return mav;
