@@ -9,7 +9,7 @@
 		</selectKey>
 		
 		INSERT INTO GAME_INFO (game_no, game_title, game_intro, game_difficulty, quiz_number, game_score, category_id, member_id)
-		VALUES(#{gameNo}, #{gameTitle}, #{gameIntro}, #{gameDifficulty}, #{quizNumber}, #{gameScore}, #{category}, #{memberId})
+		VALUES(#{gameNo}, #{gameTitle}, #{gameIntro}, #{gameDifficulty}, #{quizNumber}, #{gameScore}, #{categoryId}, #{memberId})
 	
 	</insert>
 	
@@ -22,6 +22,12 @@
 		INSERT INTO QUIZ (quiz_no, question, answer, quiz_difficulty, hint, hint_point, game_no)
 		VALUES(#{quizNo}, #{question}, #{answer}, #{quizDifficulty}, #{hint}, #{hintPoint}, #{gameNo})
 	</insert>
+	
+	<!-- 게임 목록 가져오기 -->
+	<select id="findAllGames" resultType="Game">
+		SELECT game_no, game_title, game_intro, game_difficulty, quiz_number, game_score, category_id, member_id
+		FROM game_info
+	</select>
 </mapper>
 
 

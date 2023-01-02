@@ -16,7 +16,7 @@ public class Game implements Serializable{
 	private int gameDifficulty;
 	private int quizNumber;
 	private int gameScore;
-	private String category;
+	private String categoryId;
 	@NotBlank
 	private String memberId;
 
