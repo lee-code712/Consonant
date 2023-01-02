@@ -54,11 +54,12 @@ public class SpeedGameController {
 		Map<String, String> resultMap = speedGameSvc.checkConsonants(consonants, answerList);
 		
 		if (resultMap != null) {
-			// 값이 X가 아닌 개수만큼 포인트 부여, 총 점수 및 랭킹 갱신
+			// 포인트, 총 점수, 랭킹 갱신
 			Member member = (Member) session.getAttribute("member");
 			member = speedGameSvc.reflectGameResult(member, resultMap);
 			
 			if (member != null) {
+				member.setPasswd(null);
 				session.setAttribute("member", member);	// 세션에 저장한 회원 정보 갱신
 			}
 			model.addAttribute("resultMap", resultMap);
