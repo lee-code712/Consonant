@@ -83,8 +83,8 @@ public class GameController {
 				newMemberInfo.setPasswd(null);
 				session.setAttribute("member", newMemberInfo);
 			}
-		 // 리스트로 가도록 수정
-			mav.setViewName("redirect:/game/gameList");
+		 
+			mav.setViewName("redirect:/game/gameList"); //게임 생성시 리스트로 이동
 		}catch (GameException e) {
 			List<Category> categoryList = gameSvc.getAllCategory();
 			List<InputQuiz> inputQuizList = gameSvc.getInputQuizList();
@@ -102,7 +102,6 @@ public class GameController {
 	@PostMapping("/insertQuiz")
 	public String insertQuiz(Model model, @Valid @RequestBody InputQuiz inputQuiz, BindingResult result, @ModelAttribute("createGameCommand") CreateGameCommand createGameCommand) throws Exception{
 
-		
 		if (result.hasErrors()) {
 			return "createGame::#insertQuizForm";
 		}
