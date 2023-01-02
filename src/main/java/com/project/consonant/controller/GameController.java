@@ -79,6 +79,7 @@ public class GameController {
 			if(createResult == true) {
 				memberSvc.updatePoint(memberInfo.getMemberId(), 50, 1);
 				Member newMemberInfo = memberSvc.findMember(memberInfo.getMemberId());
+				newMemberInfo.setPasswd(null);
 				session.setAttribute("member", newMemberInfo);
 			}
 		 // 리스트로 가도록 수정
