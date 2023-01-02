@@ -84,7 +84,7 @@ public class GameController {
 				session.setAttribute("member", newMemberInfo);
 			}
 		 // 리스트로 가도록 수정
-			mav.setViewName("redirect:/home");
+			mav.setViewName("redirect:/game/gameList");
 		}catch (GameException e) {
 			List<Category> categoryList = gameSvc.getAllCategory();
 			List<InputQuiz> inputQuizList = gameSvc.getInputQuizList();
