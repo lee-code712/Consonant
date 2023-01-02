@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.hibernate.validator.internal.constraintvalidators.bv.number.bound.decimal.DecimalMaxValidatorForCharSequence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.consonant.domain.Category;
@@ -26,14 +24,16 @@ import com.project.consonant.domain.Game;
 import com.project.consonant.domain.InputQuiz;
 import com.project.consonant.domain.Member;
 import com.project.consonant.service.GameService;
+import com.project.consonant.service.MemberService;
 import com.project.consonant.service.exception.GameException;
-import com.project.consonant.service.exception.LoginException;
 
 @Controller
 @RequestMapping("/game")
 public class GameController {
 	@Autowired
 	GameService gameSvc;
+	@Autowired
+	MemberService memberSvc;
 	
 	//게임 생성
 	/*게임 만드는 화면으로 이동*/
@@ -73,8 +73,12 @@ public class GameController {
 		try {
 			List<InputQuiz> inputQuizList = gameSvc.getInputQuizList();
 			createGameCommand.setMemberId(memberInfo.getMemberId());
-			System.out.println("아이디: " + createGameCommand.getMemberId() + " 퀴즈리스트 사이즈: "+inputQuizList.size());
+			//System.out.println("아이디: " + createGameCommand.getMemberId() + " 퀴즈리스트 사이즈: "+inputQuizList.size());
 			boolean createResult = gameSvc.createGame(createGameCommand, inputQuizList);
+			
+			if(createResult == true) {
+				memberSvc.updatePoint(memberInfo.getMemberId(), 50, 1);
+			}
 		 // 리스트로 가도록 수정
 			mav.setViewName("home");
 		}catch (GameException e) {
