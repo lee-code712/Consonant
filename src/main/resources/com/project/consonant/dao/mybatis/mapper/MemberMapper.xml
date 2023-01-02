@@ -12,8 +12,22 @@
 	
 	<!-- 회원 정보 등록 -->
 	<insert id="insertMember" parameterType="Member">
-		INSERT INTO MEMBER (member_id, passwd, total_score, rank, point)
+		INSERT INTO member (member_id, passwd, total_score, rank, point)
 		VALUES (#{memberId}, #{passwd}, 0, 0, 0)
 	</insert>
+	
+	<!-- 회원 포인트 갱신 -->
+	<update id="updatePoint">
+		UPDATE member
+		SET point = point + #{point}
+		WHERE member_id = #{memberId}
+	</update>
+	
+	<!-- 회원 총 점수 갱신 -->
+	<update id="updateTotalScore">
+		UPDATE member
+		SET total_score = total_score + #{score}
+		WHERE member_id = #{memberId}
+	</update>
 	
 </mapper>

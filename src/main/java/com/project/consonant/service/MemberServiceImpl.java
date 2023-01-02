@@ -13,11 +13,13 @@ import com.project.consonant.service.exception.SignUpException;
 public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
+	private RankingService rankingSvc;
+	
+	@Autowired
 	private MemberDao memberDao;
 
 	@Override
 	public Member login(Member member) throws LoginException {
-		
 		Member findMember = memberDao.findMember(member.getMemberId());
 
 		if (findMember == null) {
@@ -33,12 +35,31 @@ public class MemberServiceImpl implements MemberService {
 	@Transactional
 	@Override
 	public void signUp(Member member) throws SignUpException {
-		
 		if (memberDao.findMember(member.getMemberId()) != null) {
 			throw new SignUpException("이미 등록된 회원 ID 입니다.");
 		}
 		
 		memberDao.createMember(member);
+	}
+	
+	@Override
+	public Member findMember(String memberId) {
+		return memberDao.findMember(memberId);
+	}
+
+	@Override
+	public void updatePoint(String memberId, int point, int status) {
+		memberDao.updatePoint(memberId, point, status);
+	}
+
+	@Transactional
+	@Override
+	public void updateTotalScoreAndRankings(String memberId, int addScore) {
+		// total score 갱신
+		memberDao.updateTotalScore(memberId, addScore);
+		
+		// 전체 ranking 갱신
+		rankingSvc.updateRankings();
 	}
 
 }

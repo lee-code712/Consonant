@@ -23,4 +23,18 @@ public class MybatisMemberDao implements MemberDao {
 	public void createMember(Member member) throws DataAccessException {
 		memberMapper.insertMember(member);
 	}
+
+	@Override
+	public void updatePoint(String memberId, int point, int status) {
+		if (status == 1) {
+			memberMapper.updatePoint(memberId, point);
+		} else if (status == -1) {
+			memberMapper.updatePoint(memberId, -point);
+		}
+	}
+
+	@Override
+	public void updateTotalScore(String memberId, int addScore) {
+		memberMapper.updateTotalScore(memberId, addScore);
+	}
 }

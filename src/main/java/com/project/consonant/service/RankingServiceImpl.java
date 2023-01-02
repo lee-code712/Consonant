@@ -18,5 +18,10 @@ public class RankingServiceImpl implements RankingService {
 	public List<Member> getTopRankings() {
 		return rankingDao.findTopRankings();
 	}
+
+	@Override
+	public void updateRankings() {
+		rankingDao.updateRankings();
+	}
 	
 }

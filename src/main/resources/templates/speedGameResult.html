@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+	<head>
+		<meta charset="UTF-8" />
+		<title>speed game result</title>
+	</head>
+	
+	<th:block layout:fragment="css">
+		<link th:href="@{/css/comm.css}" rel="stylesheet" />
+		<link th:href="@{/css/speedGameResult.css}" rel="stylesheet" />
+	</th:block>
+	
+	<th:block layout:fragment="script">
+	</th:block>
+	
+	<div layout:fragment="content">
+		<div class="goHomeWrap" onclick="location.href='/home'">Home</div>
+		<div class="titleWrap">
+			게임 결과
+		</div>
+		<div class="line"></div>
+		<div class="contentWrap">
+			<div class="resultWrap">
+				<p class="result" th:each="result, stat : ${resultMap}" th:id="${result.key}" th:onclick="viewDesc([[${result.key}]])">
+					<th:block th:if="${result.value == 'X'}">[[${stat.count}]]. [[${result.key}]] [[${result.value}]]</th:block>
+					<th:block th:unless="${result.value == 'X'}">[[${stat.count}]]. [[${result.key}]] O</th:block>
+				</p>
+			</div>
+			<div class="pointWrap">
+				<div class="circle"><div class="innerCircle" id="viewCount">/[[${#maps.size(resultMap)}]]</div></div>
+				<div class="point" id="viewPoint"></div>
+			</div>
+		</div>
+	</div>
+	
+	<th:block layout:fragment="script">
+		<script src="/js/speedGameResult.js"></script>
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			const results = /*[[${resultMap}]]*/ + "";
+			/*]]>*/
+		</script>
+	</th:block>
+	
+</html>
