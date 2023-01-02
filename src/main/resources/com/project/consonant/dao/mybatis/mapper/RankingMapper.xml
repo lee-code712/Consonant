@@ -15,4 +15,15 @@
 		WHERE ROWNUM <![CDATA[<=]]> 10
 	</select>
 	
+	<!-- 총 점수에 따른 순위 갱신 -->
+	<update id="updateRankingByTotalScore">
+		UPDATE member a
+		SET rank = (
+				SELECT rank
+				FROM (SELECT RANK() OVER(ORDER BY total_score DESC) AS rank, member_id FROM member) b
+				WHERE a.member_id = b.member_id
+			)
+		WHERE total_score <![CDATA[>]]> 0
+	</update>
+	
 </mapper>

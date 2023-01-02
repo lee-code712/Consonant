@@ -19,5 +19,10 @@ public class MybatisRankingDao implements RankingDao {
 	public List<Member> findTopRankings() {
 		return rankingMapper.selectTop10Rankings();
 	}
+
+	@Override
+	public void updateRankings() {
+		rankingMapper.updateRankingByTotalScore();
+	}
 	
 }

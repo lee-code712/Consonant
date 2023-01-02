@@ -13,7 +13,7 @@ window.onload = function() {
 	viewCount.innerText = correctCount + viewCount.innerText;
 	
 	// 획득 포인트 출력
-	let getPoint = correctCount;
+	let getPoint = Math.floor(correctCount / 10) * 10;
 	const viewPoint = document.getElementById("viewPoint");
 	viewPoint.innerText = "+" + getPoint;
 };

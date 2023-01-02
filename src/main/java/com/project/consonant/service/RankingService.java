@@ -8,4 +8,6 @@ public interface RankingService {
 
 	List<Member> getTopRankings();
 	
+	void updateRankings();
+	
 }
