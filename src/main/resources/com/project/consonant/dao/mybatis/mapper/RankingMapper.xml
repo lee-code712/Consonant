@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.consonant.dao.mybatis.mapper.RankingMapper">
 
-	<!-- 회원 id로 회원 정보 조회, 로그인 시 회원정보 확인 -->
+	<!-- 1 ~ 10위 회원 점수 조회 -->
 	<select id="selectTop10Rankings" resultType="Member">
 		SELECT member_id AS memberId, total_score AS totalScore, rank
 		FROM (

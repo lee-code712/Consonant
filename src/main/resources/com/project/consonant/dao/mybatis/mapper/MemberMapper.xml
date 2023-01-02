@@ -23,7 +23,7 @@
 		WHERE member_id = #{memberId}
 	</update>
 	
-	<!-- 회원 총 점수 및 순위 갱신 -->
+	<!-- 회원 총 점수 갱신 -->
 	<update id="updateTotalScore">
 		UPDATE member
 		SET total_score = total_score + #{score}
