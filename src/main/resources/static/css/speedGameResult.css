@@ -1,3 +1,14 @@
+.goHomeWrap {
+	position: absolute;
+	right: 20px;
+	top: 10px;
+	
+	font-weight: 400;
+	font-size: 40px;
+	
+	cursor: pointer;
+}
+
 .titleWrap {
 	position: absolute;
 	width: 394px;

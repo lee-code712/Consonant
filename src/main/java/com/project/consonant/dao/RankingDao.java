@@ -8,4 +8,6 @@ public interface RankingDao {
 
 	List<Member> findTopRankings();
 	
+	void updateRankings();
+	
 }

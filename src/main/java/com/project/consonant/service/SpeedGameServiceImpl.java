@@ -10,12 +10,19 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.project.consonant.domain.Member;
 
 @Service
 public class SpeedGameServiceImpl implements SpeedGameService {
 	
 	private String[] consonants = {"ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ" };
+	
+	@Autowired
+	private MemberService memberSvc;
 
 	@Override
 	public List<String> getRandomConsonants() {
@@ -84,6 +91,28 @@ public class SpeedGameServiceImpl implements SpeedGameService {
 		}
 		
 		return resultMap;
+	}
+
+	@Transactional
+	@Override
+	public Member reflectGameResult(Member member, Map<String, String> resultMap) {
+		// 포인트 및 추가 점수 계산
+		List<String> valueList = new ArrayList<String>(resultMap.values());
+		int correctCount = 0;
+		for (String value : valueList) {
+			if (value.equals("X")) {
+				continue;
+			}
+			correctCount++;
+		}
+		
+		// 포인트 갱신 서비스 요청
+		memberSvc.updatePoint(member.getMemberId(), (int) Math.floor(correctCount / 10) * 10, 1);
+		
+		// 총 점수 및 순위 갱신 서비스 요청
+		memberSvc.updateTotalScoreAndRankings(member.getMemberId(), correctCount);
+		
+		return memberSvc.findMember(member.getMemberId()); // 정보가 갱신된 회원 정보를 조회해 반환
 	}
 	
 	private String searchByDictionary(String word) {

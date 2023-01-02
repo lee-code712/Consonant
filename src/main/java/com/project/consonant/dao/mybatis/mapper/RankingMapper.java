@@ -10,5 +10,7 @@ import com.project.consonant.domain.Member;
 public interface RankingMapper {
 
 	List<Member> selectTop10Rankings();
+
+	void updateRankingByTotalScore();
 	
 }
