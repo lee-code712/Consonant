@@ -111,11 +111,20 @@ public class GameServiceImpl implements GameService{
 	
 	
 	//게임 리스트 가져오기
-	public List<Game> findAllGames(){
-		List<Game> gameList = gameDao.findAllGames();
+	public List<Game> findAllGames(String memberId){
+		List<Game> gameList = gameDao.findAllGames(memberId);
 		for(Game g : gameList) {
 			System.out.println(g.getGameTitle());
 		}
-		return gameDao.findAllGames();
+		return gameList;
+	}
+	
+	//카테고리별 게임 리스트 가져오기
+	public List<Game> findAllGamesByCategory(String memberId, String categoryId){
+		List<Game> gameList = gameDao.findAllGamesByCategory(memberId, categoryId);
+		for(Game g : gameList) {
+			System.out.println(g.getGameTitle());
+		}
+		return gameList;
 	}
 }

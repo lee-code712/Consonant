@@ -8,5 +8,6 @@ import com.project.consonant.domain.Quiz;
 public interface GameDao {
 	int createGame(Game game);
 	int createQuiz(Quiz quiz);
-	List<Game> findAllGames();
+	List<Game> findAllGames(String memberId);
+	List<Game> findAllGamesByCategory(String memberId, String categoryId);
 }	

@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -82,8 +83,8 @@ public class GameController {
 				newMemberInfo.setPasswd(null);
 				session.setAttribute("member", newMemberInfo);
 			}
-		 // 리스트로 가도록 수정
-			mav.setViewName("redirect:/home");
+		 
+			mav.setViewName("redirect:/game/gameList"); //게임 생성시 리스트로 이동
 		}catch (GameException e) {
 			List<Category> categoryList = gameSvc.getAllCategory();
 			List<InputQuiz> inputQuizList = gameSvc.getInputQuizList();
@@ -101,7 +102,6 @@ public class GameController {
 	@PostMapping("/insertQuiz")
 	public String insertQuiz(Model model, @Valid @RequestBody InputQuiz inputQuiz, BindingResult result, @ModelAttribute("createGameCommand") CreateGameCommand createGameCommand) throws Exception{
 
-		
 		if (result.hasErrors()) {
 			return "createGame::#insertQuizForm";
 		}
@@ -131,8 +131,8 @@ public class GameController {
 		Member memberInfo = (Member) session.getAttribute("member");
 		System.out.println(memberInfo.getMemberId());
 		List<Category> categoryList = gameSvc.getAllCategory();
-		List<Game> gameList = gameSvc.findAllGames();
-		
+		List<Game> gameList = gameSvc.findAllGames(memberInfo.getMemberId());
+	
 		model.addAttribute("memberInfo", memberInfo);
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("gameList", gameList);
@@ -140,4 +140,26 @@ public class GameController {
 		return "gameList";
 	}
 	
+	//카테고리별 게임 리스트
+	@GetMapping("/category/gameList")
+	public String gameListByCategory(Model model, HttpSession session, String categoryId) throws Exception{
+		Member memberInfo = (Member) session.getAttribute("member");
+		System.out.println(memberInfo.getMemberId());
+		List<Category> categoryList = gameSvc.getAllCategory();
+		List<Game> gameList = gameSvc.findAllGamesByCategory(memberInfo.getMemberId(), categoryId);
+		
+		model.addAttribute("memberInfo", memberInfo);
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("gameList", gameList);
+			
+		return "gameList::#gameListDiv";
+	}
+	
+	//게임 시작
+	@GetMapping("/playGame/{gameNo}")
+	public String playGame(Model model, HttpSession session, @PathVariable("gameNo") int gameNo) throws Exception{
+		Member memberInfo = (Member) session.getAttribute("member");
+		model.addAttribute("gameNo", gameNo);
+		return "playGame";
+	}
 }
