@@ -30,10 +30,10 @@ public class GameServiceImpl implements GameService{
 		quizList = new ArrayList<>();
 		return categoryDao.findAllCategory();
 	}
-	public List<Category> getAllCategory(){
+	public List<Category> getAllCategory(){	//카테고리 가져오기
 		return categoryDao.findAllCategory();
 	}
-	public List<InputQuiz> insertQuiz(InputQuiz inputQuiz) {
+	public List<InputQuiz> insertQuiz(InputQuiz inputQuiz) { //게임 생성 시 퀴즈 등록
 		quizList.add(inputQuiz);
 		for(InputQuiz iq : quizList) {
 			System.out.println(iq.getQuestion());
@@ -41,7 +41,7 @@ public class GameServiceImpl implements GameService{
 		return quizList;
 	}
 	
-	public List<InputQuiz> removeQuiz(String question) {
+	public List<InputQuiz> removeQuiz(String question) { //게임 생성 시 퀴즈 삭제
 		for(int i = 0; i < quizList.size(); i++) {
 			InputQuiz iq = quizList.get(i);
 			if(iq.getQuestion().equals(question)) {
@@ -63,6 +63,7 @@ public class GameServiceImpl implements GameService{
 		return quizList;
 	}
 
+	//게임 생성
 	@Transactional
 	public boolean createGame(CreateGameCommand createGameCommand, List<InputQuiz> inputQuizList) throws GameException {
 		if (inputQuizList.size() == 0) { //추가된 퀴즈의 개수가 0개일때 게임 생성 불가
@@ -74,7 +75,7 @@ public class GameServiceImpl implements GameService{
 		game.setGameTitle(createGameCommand.getGameTitle());
 		game.setGameIntro(createGameCommand.getGameIntro());
 		game.setGameDifficulty(createGameCommand.getGameDifficulty());
-		game.setCategory(createGameCommand.getCategory());
+		game.setCategoryId(createGameCommand.getCategory());
 		game.setQuizNumber(inputQuizList.size());
 		
 		int scoreSum = 0;
@@ -107,4 +108,14 @@ public class GameServiceImpl implements GameService{
 		return true;
 	}
 
+	
+	
+	//게임 리스트 가져오기
+	public List<Game> findAllGames(){
+		List<Game> gameList = gameDao.findAllGames();
+		for(Game g : gameList) {
+			System.out.println(g.getGameTitle());
+		}
+		return gameDao.findAllGames();
+	}
 }

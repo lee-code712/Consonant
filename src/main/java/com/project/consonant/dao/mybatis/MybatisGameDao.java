@@ -1,5 +1,7 @@
 package com.project.consonant.dao.mybatis;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -26,7 +28,10 @@ public class MybatisGameDao implements GameDao{
 	}
 
 	
-
+	@Override
+	public List<Game> findAllGames(){
+		return gameMapper.findAllGames();
+	}
 	
 	
 }

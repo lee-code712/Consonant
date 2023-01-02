@@ -29,11 +29,12 @@
 				<option th:each="category : ${categoryList}" th:value="${category.categoryId}" th:text="${category.categoryName}"></option>	
 			</select>
 		</div>
-	
-		<div class="quizInfoBox">
+	 
+		<div class="gameListDiv">
+		<div th:each="game : ${gameList}" class="quizInfoBox">
 			<table class="quizInfoTable">
 				<tr>
-					<td class="quizNameTd">퀴즈명</td>
+					<td class="quizNameTd" th:text="${game.gameTitle}">퀴즈명</td>
 					<td class="scoreTd">내 점수: 60 / 총점: 100</td>
 					<td style="width:15%;" rowspan="2"><button class='btnGameStart' type="button">시작</button></td>
 				</tr>
@@ -42,6 +43,7 @@
 					<td>난이도: 상 / 문제 개수: 5</td>
 				</tr>
 			</table>
+		</div>
 		</div>
 	</div>
 	

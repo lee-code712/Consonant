@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.project.consonant.domain.Category;
 import com.project.consonant.domain.CreateGameCommand;
+import com.project.consonant.domain.Game;
 import com.project.consonant.domain.InputQuiz;
 import com.project.consonant.service.exception.GameException;
 
@@ -15,4 +16,6 @@ public interface GameService {
 	List<InputQuiz> removeQuiz(String inputQuiz);
 	List<InputQuiz> getInputQuizList();
 	void setInputQuizList(List<InputQuiz> quizList);
+	
+	List<Game> findAllGames();
 }

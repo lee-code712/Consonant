@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.consonant.domain.Category;
 import com.project.consonant.domain.CreateGameCommand;
+import com.project.consonant.domain.Game;
 import com.project.consonant.domain.InputQuiz;
 import com.project.consonant.domain.Member;
 import com.project.consonant.service.GameService;
@@ -123,9 +124,11 @@ public class GameController {
 		Member memberInfo = (Member) session.getAttribute("member");
 		System.out.println(memberInfo.getMemberId());
 		List<Category> categoryList = gameSvc.getAllCategory();
+		List<Game> gameList = gameSvc.findAllGames();
 		
 		model.addAttribute("memberInfo", memberInfo);
 		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("gameList", gameList);
 		
 		return "gameList";
 	}

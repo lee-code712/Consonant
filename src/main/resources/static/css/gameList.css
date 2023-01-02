@@ -46,11 +46,11 @@
  }
  
  .quizInfoBox{
- 	position:absolute;
+ 	position: relative;
 	width: 80%;
 	height: auto;
 	padding: 2%;
-	margin-top: 10%;
+	margin-top: 5%;
 	margin-left: 8%;
 	margin-right: 8%;
 	background: #FFF29E;
@@ -90,5 +90,11 @@
 }
 .scoreTd{
 	width: 30%;
+}
+
+.gameListDiv{
+	position:absolute; 
+	width: 100%; 
+	margin-top:3%;
 }
  
