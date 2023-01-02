@@ -14,10 +14,6 @@
 		<link th:href="@{/css/gameList.css}" rel="stylesheet" />
 	</th:block>
 	
-	<th:block layout:fragment="script">
-	</th:block>
-	
-	
 	
 	<div layout:fragment="content" align="center">
 		<div class="divForButtons">
@@ -36,22 +32,18 @@
 				<tr>
 					<td class="quizNameTd" th:text="${game.gameTitle}">퀴즈명</td>
 					<td class="scoreTd" th:text="|내 점수: ${game.score} / 총점: ${game.gameScore}|">내 점수: 60 / 총점: 100</td>
-					<td style="width:15%;" rowspan="2"><button class='btnGameStart' type="button">시작</button></td>
+					<td style="width:15%;" rowspan="2"><button class='btnGameStart' type="button" th:onclick="|location.href='/game/playGame/${game.gameNo}'|">시작</button></td>
 				</tr>
 				<tr>
 					<td th:text="${game.gameIntro}"></td>
 					<td th:if="${game.gameDifficulty == 3}" th:text="|난이도: 상 / 문제 개수: ${game.quizNumber}|"></td>
 					<td th:if="${game.gameDifficulty == 2}" th:text="|난이도: 중 / 문제 개수: ${game.quizNumber}|"></td>
 					<td th:if="${game.gameDifficulty == 1}" th:text="|난이도: 하 / 문제 개수: ${game.quizNumber}|"></td>
-				</tr>
 			</table>
 		</div>
 		</div>
 	</div>
 	
-	
-	
-	<!--  <script th:src="@{/js/gameList.js}"></script> -->
 	<th:block layout:fragment="script">
 		<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 		<script src="/js/gameList.js"></script>
