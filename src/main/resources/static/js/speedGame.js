@@ -1,5 +1,5 @@
-const setTime = 60;	// 최초 설정 시간 (기본 : 초)
 const regex = /^[가-힣|]+$/;
+let setTime = 60;	// 최초 설정 시간 (기본 : 초)
 let answerList = [];
 
 window.onload = function() { 
