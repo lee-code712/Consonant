@@ -1,0 +1,16 @@
+insert into category (category_name, category_id)values ('환경', 'env');
+insert into category (category_name, category_id)values ('동물', 'ani');
+insert into category (category_name, category_id)values ('식물', 'pla');
+insert into category (category_name, category_id)values ('경제', 'eco');
+insert into category (category_name, category_id)values ('컴퓨터', 'com');
+insert into category (category_name, category_id)values ('음식', 'foo');
+insert into category (category_name, category_id)values ('과학', 'sci');
+insert into category (category_name, category_id)values ('예술', 'art');
+insert into category (category_name, category_id)values ('스포츠', 'spo');
+insert into category (category_name, category_id)values ('문학', 'lit');
+insert into category (category_name, category_id)values ('건강', 'hea');
+insert into category (category_name, category_id)values ('연예', 'ent');
+insert into category (category_name, category_id)values ('음악', 'mus');
+insert into category (category_name, category_id)values ('정치', 'pol');
+insert into category (category_name, category_id)values ('사회', 'soc');
+insert into category (category_name, category_id)values ('기타', 'etc');
