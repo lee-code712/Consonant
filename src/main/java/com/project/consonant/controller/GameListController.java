@@ -28,13 +28,11 @@ public class GameListController {
 	
 	/* 게임 리스트 화면 이동 */
 	@GetMapping("")
-	public String goGameList(Model model, HttpSession session) throws Exception {
-		Member memberInfo = (Member) session.getAttribute("member");
+	public String goGameList(Model model) throws Exception {
 		List<Category> categoryList = gameSvc.getAllCategory();
 
-		model.addAttribute("memberInfo", memberInfo);
 		model.addAttribute("categoryList", categoryList);
-
+		
 		return "gameList";
 	}
 
@@ -59,36 +57,21 @@ public class GameListController {
 		return gameList;
 	}
 	
-	@GetMapping("/page/{page}")
+	@GetMapping("/page/{pageType}")
 	@ResponseBody
-	public PagedListHolder<Game> GameListPage(@PathVariable("page") String page,
+	public PagedListHolder<Game> GameListPage(@PathVariable("pageType") String pageType,
 			HttpSession session) throws IOException {
 		@SuppressWarnings("unchecked")
 		PagedListHolder<Game> gameList = (PagedListHolder<Game>) session.getAttribute("gameList");
 		
-		if ("next".equals(page)) {
+		if ("next".equals(pageType)) {
 			gameList.nextPage();
 		}
-		else if ("previous".equals(page)) {
+		else if ("previous".equals(pageType)) {
 			gameList.previousPage();
 		}
 
 		return gameList;
 	}
-
-//	// 카테고리별 게임 리스트
-//	@GetMapping("/category/gameList")
-//	public String gameListByCategory(Model model, HttpSession session, String categoryId) throws Exception {
-//		Member memberInfo = (Member) session.getAttribute("member");
-//		System.out.println(memberInfo.getMemberId());
-//		List<Category> categoryList = gameSvc.getAllCategory();
-//		List<Game> gameList = gameSvc.findAllGamesByCategory(memberInfo.getMemberId(), categoryId);
-//
-//		model.addAttribute("memberInfo", memberInfo);
-//		model.addAttribute("categoryList", categoryList);
-//		model.addAttribute("gameList", gameList);
-//
-//		return "gameList::#gameListDiv";
-//	}
-
+	
 }
