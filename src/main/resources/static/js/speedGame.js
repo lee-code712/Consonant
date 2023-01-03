@@ -1,6 +1,6 @@
-let setTime = 60;	// 최초 설정 시간(기본 : 초)
-let answerList = [];
+const setTime = 60;	// 최초 설정 시간 (기본 : 초)
 const regex = /^[가-힣|]+$/;
+let answerList = [];
 
 window.onload = function() { 
 	// 게임 타이머 설정
@@ -9,10 +9,10 @@ window.onload = function() {
 	// 엔터로 버튼 이벤트가 활성화되도록 설정
 	const input = document.getElementById("answer");
 	input.addEventListener("keyup", function (event) {
-	if (event.keyCode === 13) {
-        event.preventDefault();
-        document.getElementById("answer_btn").click();
-      }
+		if (event.keyCode === 13) {
+	        event.preventDefault();
+	        document.getElementById("answer_btn").click();
+	      }
 	});
 	
 	// 초성이 2개인 경우 td에 colspan 속성 추가
@@ -87,22 +87,23 @@ function addAnswer(answer) {
 }
 
 function sendAnswer() {
-	let form = document.createElement("form");
-    form.setAttribute("method", "post");
-    form.setAttribute("action", "/game/speed/resultGame");
+	const form = document.createElement("form");
+	form.method = "post";
+	form.action = "/game/speed/resultGame";
 
-    let hiddenField = document.createElement("input");
-    hiddenField.setAttribute("type",  "hidden");
-    hiddenField.setAttribute("name", "consonants");
-    hiddenField.setAttribute("value", consonants);
-    form.appendChild(hiddenField);
-    
-    hiddenField = document.createElement("input");
-    hiddenField.setAttribute("type",  "hidden");
-    hiddenField.setAttribute("name", "answers");
-    hiddenField.setAttribute("value", answerList);
-    form.appendChild(hiddenField);
+    const input1 = document.createElement("input");
+    input1.type = "hidden";
+    input1.name = "consonants";
+    input1.value = consonants;
 
+    const input2 = document.createElement("input");
+    input2.type = "hidden";
+    input2.name = "answers";
+    input2.value = answerList;
+
+	form.appendChild(input1);
+    form.appendChild(input2);
     document.body.appendChild(form);
+    
     form.submit();
 }
