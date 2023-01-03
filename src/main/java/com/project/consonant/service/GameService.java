@@ -5,6 +5,7 @@ import java.util.List;
 import com.project.consonant.domain.Category;
 import com.project.consonant.domain.CreateGameCommand;
 import com.project.consonant.domain.Game;
+import com.project.consonant.domain.GameInfoVO;
 import com.project.consonant.domain.InputQuiz;
 import com.project.consonant.service.exception.GameException;
 
@@ -19,4 +20,5 @@ public interface GameService {
 	
 	List<Game> findAllGames(String memberId);
 	List<Game> findAllGamesByCategory(String memberId, String categoryId);
+	GameInfoVO findGame(int gameNo);
 }

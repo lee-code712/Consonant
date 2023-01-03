@@ -20,5 +20,22 @@ public class Game implements Serializable{
 	@NotBlank
 	private String memberId;
 	private int score; //로그인한 회원이 받았던 점수
+	
+	public Game() {}
+	public Game(int gameNo, @NotBlank String gameTitle, @NotBlank String gameIntro, int gameDifficulty, int quizNumber,
+			int gameScore, String categoryId) {
+		super();
+		this.gameNo = gameNo;
+		this.gameTitle = gameTitle;
+		this.gameIntro = gameIntro;
+		this.gameDifficulty = gameDifficulty;
+		this.quizNumber = quizNumber;
+		this.gameScore = gameScore;
+		this.categoryId = categoryId;
+		this.memberId = "";
+		this.score=0;
+	}
 
+	
+	
 }

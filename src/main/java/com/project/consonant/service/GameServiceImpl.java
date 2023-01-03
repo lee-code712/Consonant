@@ -12,6 +12,7 @@ import com.project.consonant.dao.GameDao;
 import com.project.consonant.domain.Category;
 import com.project.consonant.domain.CreateGameCommand;
 import com.project.consonant.domain.Game;
+import com.project.consonant.domain.GameInfoVO;
 import com.project.consonant.domain.InputQuiz;
 import com.project.consonant.domain.Quiz;
 import com.project.consonant.service.exception.GameException;
@@ -126,5 +127,12 @@ public class GameServiceImpl implements GameService{
 			System.out.println(g.getGameTitle());
 		}
 		return gameList;
+	}
+	
+	//퀴즈와 함께 게임 정보 가져오기
+	public GameInfoVO findGame(int gameNo) {
+		GameInfoVO gameInfoVO = gameDao.findGame(gameNo);
+		return gameInfoVO;
+		
 	}
 }

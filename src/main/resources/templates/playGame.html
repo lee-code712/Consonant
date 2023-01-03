@@ -14,25 +14,20 @@
 		<link th:href="@{/css/playGame.css}" rel="stylesheet" />
 	</th:block>
 	
-	<!-- <div layout:fragment="content" align="center">
-		<span th:text="${gameNo}"></span>
-	</div> -->
 	
-	<div layout:fragment="content">
+	<div layout:fragment="content" id="playGameDiv">
 		<div class="gameInfoDiv">
-			<span class="gameInfoSpan">GameNO: 1111 / 카테고리: 동물</span>
+			<span class="gameInfoSpan" th:text="|GameNO: ${gameInfo.gameNo} / 카테고리: ${gameInfo.categoryId}|"></span>
 		</div>
 		<div class="currentInfo">
-			<div class="currentLeft">현재 문제<br/>8 / 10</div>
+			<div class="currentLeft" th:utext="|현재 문제<br/>${currentQue} / ${gameInfo.quizNumber}|"></div>
 		</div>
 		
 		<div class="givenWord">제시어</div>	
 		<div align="center">
 			<table class="givenWordTable">
 				<tr>
-					<td class="consonant">ㅇ</td>
-					<td class="consonant">ㅅ</td>
-					<td class="consonant">ㅇ</td>
+					<td class="consonant"  th:each="que : ${quizQuestion}" th:text="${que}"></td>
 				</tr>
 			</table>
 		</div>
@@ -40,26 +35,25 @@
 		<div style="margin-left:10%;">
 			<table class="hintTable">
 			<tr>
-				<td class="hintTableText">-10pt</td>
+				<td class="hintTableText" th:text="|-${quiz.hintPoint}pt|"></td>
 				<td></td>
 			</tr>
 			<tr>
-				<td><button class="hintBtn">Hint</button></td>
-				<td class="hintTableText" style="color:#6F6F6F;">바나나를 좋아해요</td>
+				<td><button class="hintBtn" onclick="getHint()">Hint</button></td>
+				<td class="hintTableText" id="hint" style="color:#6F6F6F; display:none;" th:text="${quiz.hint}"></td>
 			</tr>
 			</table>
 		</div>
 		
 		<div align="center" style="padding-bottom:50px;">
-			<input type="text" class="inputAnswer"></input>
-			<button type="button" class="answer_btn" onclick="">
+			<input type="text" class="inputAnswer" id="inputAnswer"></input>
+			<button type="button" class="answer_btn"  th:onclick="|solveQuestion(${quiz.gameNo}, ${gameInfo.quizNumber})|">
 					<img src="/images/check_mark.svg">
 			</button>	
 		</div>
 		
 	</div>
 	
-
 	
 	
 	<th:block layout:fragment="script">

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/comm/layout}">
+	
+	<head>
+		<meta charset="UTF-8" />
+		<title>Consonant Game Result</title>
+	</head>
+	
+	<th:block layout:fragment="css">
+		<link th:href="@{/css/comm.css}" rel="stylesheet" />
+		<link th:href="@{/css/gameResult.css}" rel="stylesheet" />
+	</th:block>
+	
+	
+	<div layout:fragment="content" align="center">
+		게임 결과
+	</div>
+	
+	<th:block layout:fragment="script">
+		<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+		<script src="/js/gameResult.js"></script>
+	</th:block>
+</html>

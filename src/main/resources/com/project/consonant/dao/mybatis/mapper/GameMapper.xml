@@ -42,6 +42,34 @@
 		WHERE g.category_id = #{categoryId}
 		ORDER BY g.game_no DESC
 	</select>
+	
+	<!-- 게임 id에 해당하는 게임 정보 가져오기 -->
+	<select id="findGame" resultMap="collectionGameResultMap">
+		SELECT g.game_no AS gameNo, g.game_title AS gameTitle, g.game_intro AS gameIntro, g.game_difficulty AS gameDifficulty, g.quiz_number AS quizNumber, g.game_score AS gameScore, g.category_id AS categoryId,
+				q.quiz_no AS quizNo, q.question, q.answer, q.quiz_difficulty AS quizDifficulty, q.hint, q.hint_point AS hintPoint, q.game_no AS gameNo
+		FROM game_info g, quiz q
+		WHERE g.game_no = q.game_no AND g.game_no=#{gameNo}
+				
+	</select>
+	
+	<resultMap id="collectionGameResultMap" type="com.project.consonant.domain.GameInfoVO">
+		<result column="gameNo" jdbcType="BIGINT" property="gameNo"/>
+		<result column="gameTitle" jdbcType="VARCHAR" property="gameTitle"/>
+		<result column="gameIntro" jdbcType="VARCHAR" property="gameIntro"/>
+		<result column="gameDifficulty" jdbcType="BIGINT" property="gameDifficulty"/>
+		<result column="quizNumber" jdbcType="BIGINT" property="quizNumber"/>
+		<result column="gameScore" jdbcType="BIGINT" property="gameScore"/>
+		<result column="categoryId" jdbcType="VARCHAR" property="categoryId"/>
+		<collection property="quizList" ofType="com.project.consonant.domain.Quiz">
+			<result column="quizNo" jdbcType="BIGINT" property="quizNo"/>
+			<result column="question" jdbcType="VARCHAR" property="question"/>
+			<result column="answer" jdbcType="VARCHAR" property="answer"/>
+			<result column="quizDifficulty" jdbcType="BIGINT" property="quizDifficulty"/>
+			<result column="hint" jdbcType="VARCHAR" property="hint"/>
+			<result column="hintPoint" jdbcType="BIGINT" property="hintPoint"/>
+			<result column="gameNo" jdbcType="BIGINT" property="gameNo"/>
+		</collection>
+	</resultMap>
 </mapper>
 
 
