@@ -22,12 +22,13 @@
 		</div>
 		<div class="divForSelect">	
 			<select class="selectGame" onchange="changeCategory(this.value)">
+				<option value="all">전체</option>
 				<option th:each="category : ${categoryList}" th:value="${category.categoryId}" th:text="${category.categoryName}"></option>	
 			</select>
 		</div>
 	 
 		<div class="gameListDiv" id="gameListDiv">
-		<div th:each="game : ${gameList}" class="quizInfoBox">
+		<!--  <div th:each="game : ${gameList}" class="quizInfoBox">
 			<table class="quizInfoTable">
 				<tr>
 					<td class="quizNameTd" th:text="${game.gameTitle}">퀴즈명</td>
@@ -40,7 +41,7 @@
 					<td th:if="${game.gameDifficulty == 2}" th:text="|난이도: 중 / 문제 개수: ${game.quizNumber}|"></td>
 					<td th:if="${game.gameDifficulty == 1}" th:text="|난이도: 하 / 문제 개수: ${game.quizNumber}|"></td>
 			</table>
-		</div>
+		</div>-->
 		</div>
 	</div>
 	

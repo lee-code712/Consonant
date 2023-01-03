@@ -21,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.consonant.domain.Category;
 import com.project.consonant.domain.CreateGameCommand;
-import com.project.consonant.domain.Game;
 import com.project.consonant.domain.InputQuiz;
 import com.project.consonant.domain.Member;
 import com.project.consonant.service.GameService;
@@ -119,40 +118,6 @@ public class GameController {
 		List<InputQuiz> inputQuizList = gameSvc.removeQuiz(map.get("question"));
 		model.addAttribute("inputQuizList", inputQuizList);
 		return "createGame::#resultDiv";
-	}
-	
-	
-	
-	
-	
-	//게임 리스트
-	@GetMapping("/gameList")
-	public String goGameList(Model model, HttpSession session) throws Exception{
-		Member memberInfo = (Member) session.getAttribute("member");
-		System.out.println(memberInfo.getMemberId());
-		List<Category> categoryList = gameSvc.getAllCategory();
-		List<Game> gameList = gameSvc.findAllGames(memberInfo.getMemberId());
-	
-		model.addAttribute("memberInfo", memberInfo);
-		model.addAttribute("categoryList", categoryList);
-		model.addAttribute("gameList", gameList);
-		
-		return "gameList";
-	}
-	
-	//카테고리별 게임 리스트
-	@GetMapping("/category/gameList")
-	public String gameListByCategory(Model model, HttpSession session, String categoryId) throws Exception{
-		Member memberInfo = (Member) session.getAttribute("member");
-		System.out.println(memberInfo.getMemberId());
-		List<Category> categoryList = gameSvc.getAllCategory();
-		List<Game> gameList = gameSvc.findAllGamesByCategory(memberInfo.getMemberId(), categoryId);
-		
-		model.addAttribute("memberInfo", memberInfo);
-		model.addAttribute("categoryList", categoryList);
-		model.addAttribute("gameList", gameList);
-			
-		return "gameList::#gameListDiv";
 	}
 	
 	//게임 시작

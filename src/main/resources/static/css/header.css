@@ -22,6 +22,8 @@ header {
 	text-align: center;
 	
 	color: #000000;
+	
+	cursor: pointer;
 }
 
 .member_info {	

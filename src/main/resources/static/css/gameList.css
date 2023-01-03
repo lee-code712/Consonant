@@ -22,6 +22,8 @@
 	background: #FFF1AA;
 	border-radius: 50px;
 	border: transparent;
+	
+	cursor: pointer;
 }
 .divForSelect{
 	position:relative;
@@ -78,6 +80,8 @@
 	background: #FFC01E;
 	border-radius: 70px;
 	border: transparent;
+	
+	cursor: pointer;
 }
 .quizInfoTable td{
 	font-size: 30px;
@@ -98,3 +102,13 @@
 	margin-top:5%;
 }
  
+.pagingWrap {
+	position: relative;
+	width: 40px;
+	margin-top: 2%;
+	
+	font-weight: 400;
+	font-size: 40px;
+	
+	cursor: pointer;
+}
