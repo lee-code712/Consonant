@@ -1,10 +1,10 @@
 package com.project.consonant.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -129,7 +128,6 @@ public class GameController {
 	//게임 시작
 	@GetMapping("/playGame/{gameNo}")
 	public String playGame(Model model, HttpSession session, @PathVariable("gameNo") int gameNo) throws Exception{
-		
 		GameInfoVO gameInfoVO = gameSvc.findGame(gameNo);
 		System.out.println("게임 타이틀: " + gameInfoVO.getGameTitle() );
 		for(Quiz q : gameInfoVO.getQuizList()) {
@@ -156,7 +154,6 @@ public class GameController {
 	//정답 입력->다음 퀴즈로 넘기기
 	@GetMapping("/playGame/{gameNo}/{quizIdx}/{answer}")
 	public String solveQuiz(Model model, HttpSession session, @PathVariable("gameNo") int gameNo, @PathVariable("quizIdx") int quizIdx, @PathVariable("answer") String quizAnswer) throws Exception{
-
 		gameSvc.getUserAnswer().put(quizIdx, quizAnswer); //입력한 답안을 답안배열에 저장
 		/*
 		 Set<Integer> keySet = gameSvc.getUserAnswer().keySet();
@@ -188,11 +185,12 @@ public class GameController {
 		Member memberInfo = (Member) session.getAttribute("member");
 		
 		Quiz quiz = gameSvc.getPlayGameQuiz().get(quizIdx);
+		
 		memberSvc.updatePoint(memberInfo.getMemberId(), quiz.getHintPoint(), -1);
 		Member newMemberInfo = memberSvc.findMember(memberInfo.getMemberId());
 		newMemberInfo.setPasswd(null);
 		session.setAttribute("member", newMemberInfo);
-		
+	
 		model.addAttribute("quiz", quiz);
 		
 		return "playGame::#hint";
@@ -200,9 +198,17 @@ public class GameController {
 	
 	
 	//게임 결과
-	@GetMapping("/result")
-	public String getResult(Model model, HttpSession session) throws Exception{
+	@PostMapping("/result")
+	public String getResult(Model model, HttpSession session, HttpServletRequest request) throws Exception{
 		Member memberInfo = (Member) session.getAttribute("member");
+		String answer = request.getParameter("answer");
+		gameSvc.getUserAnswer().put(gameSvc.getPlayGameQuiz().size() - 1, answer);
+		/*
+		Set<Integer> keySet = gameSvc.getUserAnswer().keySet();
+	     for (Integer key : keySet) {
+	          System.out.println(key + " : " + gameSvc.getUserAnswer().get(key));
+	     }
+	     */
 		return "gameResult";
 	}
 }

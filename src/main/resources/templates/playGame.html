@@ -38,7 +38,7 @@
 				<td></td>
 			</tr>
 			<tr>
-				<td><button class="hintBtn" th:onclick="getHint([[${quiz.hintPoint}]])" th:text="|Hint ${quiz.hintPoint}pt|"></button></td>
+				<td><button class="hintBtn" th:onclick="getHint([[${session.member.point}]],[[${quiz.hintPoint}]])" th:text="|Hint ${quiz.hintPoint}pt|"></button></td>
 				<td class="hintTableText" id="hint" style="color:#6F6F6F; display:none;" th:text="${quiz.hint}"></td>
 			</tr>
 			</table>
