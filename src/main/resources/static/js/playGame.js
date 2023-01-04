@@ -1,5 +1,6 @@
 var index = 0;
 function solveQuestion(gameNo, quizNumber){
+	console.log(index +" " + quizNumber);
 	const answer = document.querySelector('#inputAnswer').value;
 	
 	if (answer == "") {
@@ -7,16 +8,11 @@ function solveQuestion(gameNo, quizNumber){
 		return;
 	}
 	
-	if(index == quizNumber){
-		$.ajax({
-			url:"/game/playGame/" + gameNo + "/" + index + "/" + encodeURI(answer),
-			contentType : "application/json; charset=utf-8",
-			type:"GET",
-		}).done(function(){
-			
-		});
+	if(index + 1 == quizNumber){
+		var url = '/game/result';
+		sendPost(url, answer);
 	}
-	else if(index + 1 <= quizNumber){
+	else if(index + 1 < quizNumber){
 		$.ajax({
 			url:"/game/playGame/" + gameNo + "/" + index + "/" + encodeURI(answer),
 			contentType : "application/json; charset=utf-8",
@@ -30,7 +26,19 @@ function solveQuestion(gameNo, quizNumber){
 	}
 	
 }
-
+function sendPost(url, param){
+			var form = document.createElement('form');
+			form.setAttribute('method', 'post');
+			form.setAttribute('action', url);
+			document.charset='utf-8';
+			var hiddenField = document.createElement('input');
+			hiddenField.setAttribute('type', 'hidden');
+			hiddenField.setAttribute('name', 'answer');
+			hiddenField.setAttribute('value', param);
+			form.appendChild(hiddenField);
+			document.body.appendChild(form);
+			form.submit();
+}
 function getHint(){
 	$.ajax({
 		url:"/game/getHint/" + index,
