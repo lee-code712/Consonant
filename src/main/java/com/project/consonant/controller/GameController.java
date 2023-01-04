@@ -137,7 +137,7 @@ public class GameController {
 		}
 		gameSvc.setGameInfo(new Game( gameInfoVO.getGameNo(), gameInfoVO.getGameTitle(), gameInfoVO.getGameIntro(),
 							gameInfoVO.getGameDifficulty(), gameInfoVO.getQuizNumber(), gameInfoVO.getGameScore(),
-							gameInfoVO.getCategoryId()));
+							gameInfoVO.getCategoryId(), gameInfoVO.getCategoryName()));
 
 		gameSvc.setPlayGameQuiz(gameInfoVO.getQuizList());
 		

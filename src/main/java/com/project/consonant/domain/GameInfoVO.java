@@ -17,6 +17,7 @@ public class GameInfoVO {
 	private int quizNumber;
 	private int gameScore;
 	private String categoryId;
+	private String categoryName;
 	private List<Quiz> quizList;
 	
 	public GameInfoVO() {}

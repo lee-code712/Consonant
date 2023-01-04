@@ -1,4 +1,6 @@
 var index = 0;
+let currentPoint = point;
+
 function solveQuestion(gameNo, quizNumber){
 	const answer = document.querySelector('#inputAnswer').value;
 	
@@ -31,7 +33,11 @@ function solveQuestion(gameNo, quizNumber){
 	
 }
 
-function getHint(){
+function getHint(hintPoint){
+	// 보유하고 있는 포인트 차감해서 출력
+	currentPoint = currentPoint - hintPoint;
+	$("#myPoint").text("현재 " + currentPoint + "pt");
+	
 	$.ajax({
 		url:"/game/getHint/" + index,
 		contentType : "application/json; charset=utf-8",

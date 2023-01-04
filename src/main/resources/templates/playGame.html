@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{/comm/layout}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	
 	<head>
 		<meta charset="UTF-8" />
@@ -17,7 +16,7 @@
 	
 	<div layout:fragment="content" id="playGameDiv">
 		<div class="gameInfoDiv">
-			<span class="gameInfoSpan" th:text="|GameNO: ${gameInfo.gameNo} / 카테고리: ${gameInfo.categoryId}|"></span>
+			<span class="gameInfoSpan" th:text="|GameNO: ${gameInfo.gameNo} / 카테고리: ${gameInfo.categoryName}|"></span>
 		</div>
 		<div class="currentInfo">
 			<div class="currentLeft" th:utext="|현재 문제<br/>${currentQue} / ${gameInfo.quizNumber}|"></div>
@@ -35,11 +34,11 @@
 		<div style="margin-left:10%;">
 			<table class="hintTable">
 			<tr>
-				<td class="hintTableText" th:text="|-${quiz.hintPoint}pt|"></td>
+				<td class="hintTableText" id="myPoint" th:text="|현재 ${session.member.point}pt|"></td>
 				<td></td>
 			</tr>
 			<tr>
-				<td><button class="hintBtn" onclick="getHint()">Hint</button></td>
+				<td><button class="hintBtn" th:onclick="getHint([[${quiz.hintPoint}]])" th:text="|Hint ${quiz.hintPoint}pt|"></button></td>
 				<td class="hintTableText" id="hint" style="color:#6F6F6F; display:none;" th:text="${quiz.hint}"></td>
 			</tr>
 			</table>
@@ -57,6 +56,12 @@
 	
 	
 	<th:block layout:fragment="script">
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			const point = /*[[${session.member.point}]]*/ + 0;
+			/*]]>*/
+			console.log(point);
+		</script>
 		<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 		<script src="/js/playGame.js"></script>
 	</th:block>
