@@ -176,7 +176,7 @@ public class GameController {
 			model.addAttribute("gameInfo", gameSvc.getGameInfo());
 			model.addAttribute("quiz", quiz);
 			model.addAttribute("quizQuestion", questionArray);
-			model.addAttribute("currentQue", quizIdx + 1);
+			model.addAttribute("currentQue", quizIdx + 2);
 			return "playGame::#playGameDiv";
 		}
 	    return "playGame";
