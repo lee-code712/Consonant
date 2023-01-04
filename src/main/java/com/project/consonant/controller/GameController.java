@@ -3,6 +3,7 @@ package com.project.consonant.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -126,27 +127,27 @@ public class GameController {
 	}
 	
 	//게임 시작
-	List<Quiz> quizList; //퀴즈 리스트
-	Game gameInfo; //현재 게임 정보
+	
+	
 	@GetMapping("/playGame/{gameNo}")
 	public String playGame(Model model, HttpSession session, @PathVariable("gameNo") int gameNo) throws Exception{
-		gameInfo = new Game();
 		
 		GameInfoVO gameInfoVO = gameSvc.findGame(gameNo);
 		System.out.println("게임 타이틀: " + gameInfoVO.getGameTitle() );
 		for(Quiz q : gameInfoVO.getQuizList()) {
 			System.out.println("퀴즈: " + q.getAnswer());
 		}
-		gameInfo = new Game( gameInfoVO.getGameNo(), gameInfoVO.getGameTitle(), gameInfoVO.getGameIntro(),
+		gameSvc.setGameInfo(new Game( gameInfoVO.getGameNo(), gameInfoVO.getGameTitle(), gameInfoVO.getGameIntro(),
 							gameInfoVO.getGameDifficulty(), gameInfoVO.getQuizNumber(), gameInfoVO.getGameScore(),
-							gameInfoVO.getCategoryId());
-		quizList = gameInfoVO.getQuizList();
+							gameInfoVO.getCategoryId()));
 
-		Quiz quiz = quizList.get(0); //첫번째 퀴즈 보냄
+		gameSvc.setPlayGameQuiz(gameInfoVO.getQuizList());
+		
+		Quiz quiz = gameSvc.getPlayGameQuiz().get(0); //첫번째 퀴즈 보냄
 		String question = quiz.getQuestion();
 		char[] questionArray = question.toCharArray();
 		
-		model.addAttribute("gameInfo", gameInfo);
+		model.addAttribute("gameInfo", gameSvc.getGameInfo());
 		model.addAttribute("quiz", quiz);
 		model.addAttribute("quizQuestion", questionArray);
 		model.addAttribute("currentQue", 1);
@@ -157,16 +158,30 @@ public class GameController {
 	//정답 입력->다음 퀴즈로 넘기기
 	@GetMapping("/playGame/{gameNo}/{quizIdx}/{answer}")
 	public String solveQuiz(Model model, HttpSession session, @PathVariable("gameNo") int gameNo, @PathVariable("quizIdx") int quizIdx, @PathVariable("answer") String quizAnswer) throws Exception{
-		Quiz quiz = quizList.get(quizIdx); //첫번째 퀴즈 보냄
-		String question = quiz.getQuestion();
-		char[] questionArray = question.toCharArray();
-		
-		model.addAttribute("gameInfo", gameInfo);
-		model.addAttribute("quiz", quiz);
-		model.addAttribute("quizQuestion", questionArray);
-		model.addAttribute("currentQue", quizIdx + 1);
-		
-		return "playGame::#playGameDiv";
+
+		gameSvc.getUserAnswer().put(quizIdx, quizAnswer); //입력한 답안을 답안배열에 저장
+		/*
+		 Set<Integer> keySet = gameSvc.getUserAnswer().keySet();
+	     for (Integer key : keySet) {
+	          System.out.println(key + " : " + gameSvc.getUserAnswer().get(key));
+	     }
+	    */
+	    if(quizIdx + 1 == gameSvc.getPlayGameQuiz().size()) {
+	    	
+	 		return "redirect:/game/result"; //결과로 이동
+	    }
+	    else if(quizIdx + 1 <= gameSvc.getPlayGameQuiz().size()) {
+		    Quiz quiz = gameSvc.getPlayGameQuiz().get(quizIdx + 1); //다음 퀴즈 보냄
+			String question = quiz.getQuestion(); //다음 퀴즈 초성
+			char[] questionArray = question.toCharArray();
+			
+			model.addAttribute("gameInfo", gameSvc.getGameInfo());
+			model.addAttribute("quiz", quiz);
+			model.addAttribute("quizQuestion", questionArray);
+			model.addAttribute("currentQue", quizIdx + 1);
+			return "playGame::#playGameDiv";
+		}
+	    return "playGame";
 	}
 	
 	//힌트 보기-포인트 차감
@@ -174,7 +189,7 @@ public class GameController {
 	public String getHint(Model model, HttpSession session, @PathVariable("quizIdx") int quizIdx) throws Exception{
 		Member memberInfo = (Member) session.getAttribute("member");
 		
-		Quiz quiz = quizList.get(quizIdx);
+		Quiz quiz = gameSvc.getPlayGameQuiz().get(quizIdx);
 		memberSvc.updatePoint(memberInfo.getMemberId(), quiz.getHintPoint(), -1);
 		Member newMemberInfo = memberSvc.findMember(memberInfo.getMemberId());
 		newMemberInfo.setPasswd(null);

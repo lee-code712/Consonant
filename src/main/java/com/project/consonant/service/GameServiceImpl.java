@@ -1,7 +1,9 @@
 package com.project.consonant.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -129,10 +131,39 @@ public class GameServiceImpl implements GameService{
 		return gameList;
 	}
 	
+	
+	//게임 플레이
+	List<Quiz> playGameQuiz = new ArrayList<>();  //게임 플레이 할때 퀴즈 리스트 객체
+	Game gameInfo = new Game(); //게임 플레이할 때 게임 정보 저장 객체
+	Map<Integer, String> userAnswer = new HashMap<>();
 	//퀴즈와 함께 게임 정보 가져오기
 	public GameInfoVO findGame(int gameNo) {
 		GameInfoVO gameInfoVO = gameDao.findGame(gameNo);
+		playGameQuiz = new ArrayList<>();
+		gameInfo = new Game();
+		userAnswer = new HashMap<>();
 		return gameInfoVO;
-		
 	}
+	public List<Quiz> getPlayGameQuiz() {
+		return playGameQuiz;
+	}
+	public void setPlayGameQuiz(List<Quiz> playGameQuiz) {
+		this.playGameQuiz = playGameQuiz;
+	}
+	public Game getGameInfo() {
+		return gameInfo;
+	}
+	public void setGameInfo(Game gameInfo) {
+		this.gameInfo = gameInfo;
+	}
+	public Map<Integer, String> getUserAnswer() {
+		return userAnswer;
+	}
+	public void setUserAnswer(Map<Integer, String> userAnswer) {
+		this.userAnswer = userAnswer;
+	}
+	
+	
+	
+	
 }
