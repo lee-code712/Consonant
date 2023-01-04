@@ -127,8 +127,6 @@ public class GameController {
 	}
 	
 	//게임 시작
-	
-	
 	@GetMapping("/playGame/{gameNo}")
 	public String playGame(Model model, HttpSession session, @PathVariable("gameNo") int gameNo) throws Exception{
 		
