@@ -17,13 +17,14 @@ public class Game implements Serializable{
 	private int quizNumber;
 	private int gameScore;
 	private String categoryId;
+	private String categoryName;
 	@NotBlank
 	private String memberId;
 	private int score; //로그인한 회원이 받았던 점수
 	
 	public Game() {}
 	public Game(int gameNo, @NotBlank String gameTitle, @NotBlank String gameIntro, int gameDifficulty, int quizNumber,
-			int gameScore, String categoryId) {
+			int gameScore, String categoryId, String categoryName) {
 		super();
 		this.gameNo = gameNo;
 		this.gameTitle = gameTitle;
@@ -32,6 +33,7 @@ public class Game implements Serializable{
 		this.quizNumber = quizNumber;
 		this.gameScore = gameScore;
 		this.categoryId = categoryId;
+		this.categoryName = categoryName;
 		this.memberId = "";
 		this.score=0;
 	}
