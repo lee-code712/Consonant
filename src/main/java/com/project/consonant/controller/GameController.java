@@ -128,7 +128,7 @@ public class GameController {
 	//게임 시작
 	@GetMapping("/playGame/{gameNo}")
 	public String playGame(Model model, HttpSession session, @PathVariable("gameNo") int gameNo) throws Exception{
-		
+		Member memberInfo = (Member) session.getAttribute("member");
 		GameInfoVO gameInfoVO = gameSvc.findGame(gameNo);
 		System.out.println("게임 타이틀: " + gameInfoVO.getGameTitle() );
 		for(Quiz q : gameInfoVO.getQuizList()) {
@@ -144,6 +144,7 @@ public class GameController {
 		String question = quiz.getQuestion();
 		char[] questionArray = question.toCharArray();
 		
+		model.addAttribute("member", memberInfo);
 		model.addAttribute("gameInfo", gameSvc.getGameInfo());
 		model.addAttribute("quiz", quiz);
 		model.addAttribute("quizQuestion", questionArray);
@@ -155,7 +156,7 @@ public class GameController {
 	//정답 입력->다음 퀴즈로 넘기기
 	@GetMapping("/playGame/{gameNo}/{quizIdx}/{answer}")
 	public String solveQuiz(Model model, HttpSession session, @PathVariable("gameNo") int gameNo, @PathVariable("quizIdx") int quizIdx, @PathVariable("answer") String quizAnswer) throws Exception{
-
+		Member memberInfo = (Member) session.getAttribute("member");
 		gameSvc.getUserAnswer().put(quizIdx, quizAnswer); //입력한 답안을 답안배열에 저장
 		/*
 		 Set<Integer> keySet = gameSvc.getUserAnswer().keySet();
@@ -172,6 +173,7 @@ public class GameController {
 			String question = quiz.getQuestion(); //다음 퀴즈 초성
 			char[] questionArray = question.toCharArray();
 			
+			model.addAttribute("member", memberInfo);
 			model.addAttribute("gameInfo", gameSvc.getGameInfo());
 			model.addAttribute("quiz", quiz);
 			model.addAttribute("quizQuestion", questionArray);
@@ -187,11 +189,12 @@ public class GameController {
 		Member memberInfo = (Member) session.getAttribute("member");
 		
 		Quiz quiz = gameSvc.getPlayGameQuiz().get(quizIdx);
+		
 		memberSvc.updatePoint(memberInfo.getMemberId(), quiz.getHintPoint(), -1);
 		Member newMemberInfo = memberSvc.findMember(memberInfo.getMemberId());
 		newMemberInfo.setPasswd(null);
 		session.setAttribute("member", newMemberInfo);
-		
+	
 		model.addAttribute("quiz", quiz);
 		
 		return "playGame::#hint";
@@ -204,10 +207,12 @@ public class GameController {
 		Member memberInfo = (Member) session.getAttribute("member");
 		String answer = request.getParameter("answer");
 		gameSvc.getUserAnswer().put(gameSvc.getPlayGameQuiz().size() - 1, answer);
+		/*
 		Set<Integer> keySet = gameSvc.getUserAnswer().keySet();
 	     for (Integer key : keySet) {
 	          System.out.println(key + " : " + gameSvc.getUserAnswer().get(key));
 	     }
+	     */
 		return "gameResult";
 	}
 }

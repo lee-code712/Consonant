@@ -35,11 +35,11 @@
 		<div style="margin-left:10%;">
 			<table class="hintTable">
 			<tr>
-				<td class="hintTableText" th:text="|-${quiz.hintPoint}pt|"></td>
+				<td class="hintTableText" id="hintPoint" th:text="|-${quiz.hintPoint}pt|"></td>
 				<td></td>
 			</tr>
 			<tr>
-				<td><button class="hintBtn" onclick="getHint()">Hint</button></td>
+				<td><button class="hintBtn" th:onclick="|getHint(${member.point}, ${quiz.hintPoint})|">Hint</button></td>
 				<td class="hintTableText" id="hint" style="color:#6F6F6F; display:none;" th:text="${quiz.hint}"></td>
 			</tr>
 			</table>

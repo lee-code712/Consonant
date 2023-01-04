@@ -39,15 +39,21 @@ function sendPost(url, param){
 			document.body.appendChild(form);
 			form.submit();
 }
-function getHint(){
+function getHint(memberPoint, hintPoint){
+	if(memberPoint < hintPoint){
+		alert("포인트 부족");
+	}
+	else{
 	$.ajax({
 		url:"/game/getHint/" + index,
 		contentType : "application/json; charset=utf-8",
 		dataType:"html", //반환 타입->데이터타입이랑 서비스에서 반환하는 타입이 안맞으면 done 동작 안함
 		type:"GET",
+		
 	}).done(function(fragment){
 		console.log(fragment);
 		 $(".hintTableText").css("display","");
 		 $(".hintBtn").attr("disabled", "true");
 	});
+	}
 }
