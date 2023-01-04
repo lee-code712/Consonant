@@ -1,7 +1,9 @@
 package com.project.consonant.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -16,13 +18,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.consonant.domain.Category;
 import com.project.consonant.domain.CreateGameCommand;
+import com.project.consonant.domain.Game;
+import com.project.consonant.domain.GameInfoVO;
 import com.project.consonant.domain.InputQuiz;
 import com.project.consonant.domain.Member;
+import com.project.consonant.domain.Quiz;
 import com.project.consonant.service.GameService;
 import com.project.consonant.service.MemberService;
 import com.project.consonant.service.exception.GameException;
@@ -123,8 +129,80 @@ public class GameController {
 	//게임 시작
 	@GetMapping("/playGame/{gameNo}")
 	public String playGame(Model model, HttpSession session, @PathVariable("gameNo") int gameNo) throws Exception{
-		Member memberInfo = (Member) session.getAttribute("member");
-		model.addAttribute("gameNo", gameNo);
+		
+		GameInfoVO gameInfoVO = gameSvc.findGame(gameNo);
+		System.out.println("게임 타이틀: " + gameInfoVO.getGameTitle() );
+		for(Quiz q : gameInfoVO.getQuizList()) {
+			System.out.println("퀴즈: " + q.getAnswer());
+		}
+		gameSvc.setGameInfo(new Game( gameInfoVO.getGameNo(), gameInfoVO.getGameTitle(), gameInfoVO.getGameIntro(),
+							gameInfoVO.getGameDifficulty(), gameInfoVO.getQuizNumber(), gameInfoVO.getGameScore(),
+							gameInfoVO.getCategoryId()));
+
+		gameSvc.setPlayGameQuiz(gameInfoVO.getQuizList());
+		
+		Quiz quiz = gameSvc.getPlayGameQuiz().get(0); //첫번째 퀴즈 보냄
+		String question = quiz.getQuestion();
+		char[] questionArray = question.toCharArray();
+		
+		model.addAttribute("gameInfo", gameSvc.getGameInfo());
+		model.addAttribute("quiz", quiz);
+		model.addAttribute("quizQuestion", questionArray);
+		model.addAttribute("currentQue", 1);
+		
 		return "playGame";
+	}
+	
+	//정답 입력->다음 퀴즈로 넘기기
+	@GetMapping("/playGame/{gameNo}/{quizIdx}/{answer}")
+	public String solveQuiz(Model model, HttpSession session, @PathVariable("gameNo") int gameNo, @PathVariable("quizIdx") int quizIdx, @PathVariable("answer") String quizAnswer) throws Exception{
+
+		gameSvc.getUserAnswer().put(quizIdx, quizAnswer); //입력한 답안을 답안배열에 저장
+		/*
+		 Set<Integer> keySet = gameSvc.getUserAnswer().keySet();
+	     for (Integer key : keySet) {
+	          System.out.println(key + " : " + gameSvc.getUserAnswer().get(key));
+	     }
+	    */
+	    if(quizIdx + 1 == gameSvc.getPlayGameQuiz().size()) {
+	    	
+	 		return "redirect:/game/result"; //결과로 이동
+	    }
+	    else if(quizIdx + 1 <= gameSvc.getPlayGameQuiz().size()) {
+		    Quiz quiz = gameSvc.getPlayGameQuiz().get(quizIdx + 1); //다음 퀴즈 보냄
+			String question = quiz.getQuestion(); //다음 퀴즈 초성
+			char[] questionArray = question.toCharArray();
+			
+			model.addAttribute("gameInfo", gameSvc.getGameInfo());
+			model.addAttribute("quiz", quiz);
+			model.addAttribute("quizQuestion", questionArray);
+			model.addAttribute("currentQue", quizIdx + 1);
+			return "playGame::#playGameDiv";
+		}
+	    return "playGame";
+	}
+	
+	//힌트 보기-포인트 차감
+	@GetMapping("/getHint/{quizIdx}")
+	public String getHint(Model model, HttpSession session, @PathVariable("quizIdx") int quizIdx) throws Exception{
+		Member memberInfo = (Member) session.getAttribute("member");
+		
+		Quiz quiz = gameSvc.getPlayGameQuiz().get(quizIdx);
+		memberSvc.updatePoint(memberInfo.getMemberId(), quiz.getHintPoint(), -1);
+		Member newMemberInfo = memberSvc.findMember(memberInfo.getMemberId());
+		newMemberInfo.setPasswd(null);
+		session.setAttribute("member", newMemberInfo);
+		
+		model.addAttribute("quiz", quiz);
+		
+		return "playGame::#hint";
+	}
+	
+	
+	//게임 결과
+	@GetMapping("/result")
+	public String getResult(Model model, HttpSession session) throws Exception{
+		Member memberInfo = (Member) session.getAttribute("member");
+		return "gameResult";
 	}
 }

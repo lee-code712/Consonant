@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.project.consonant.dao.GameDao;
 import com.project.consonant.dao.mybatis.mapper.GameMapper;
 import com.project.consonant.domain.Game;
+import com.project.consonant.domain.GameInfoVO;
 import com.project.consonant.domain.Quiz;
 
 @Repository
@@ -38,4 +39,8 @@ public class MybatisGameDao implements GameDao{
 		return gameMapper.findAllGamesByCategory(memberId, categoryId);
 	}
 	
+	@Override
+	public GameInfoVO findGame(int gameNo) {
+		return gameMapper.findGame(gameNo);
+	}
 }

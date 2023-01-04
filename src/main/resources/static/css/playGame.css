@@ -1,0 +1,105 @@
+.gameInfoDiv{
+	float:left;
+	margin-left:2%;
+	margin-top:1%;
+}
+.gameInfoSpan{
+	font-weight:900; 
+	font-size: 25px
+}
+.currentInfo{
+	 float:right; 
+	 margin-right:2%; 
+	 margin-top:1%;
+}
+.currentLeft{
+	font-weight:900; 
+	font-size: 25px; 
+	float:left; 
+	padding-right:50px; 
+	text-align:center;
+}
+.currentCorrect{
+	font-weight:900; 
+	font-size: 25px;  
+	text-align:center; 
+	float:right;
+}
+
+.givenWord{
+	width:100%; 
+	clear:both;
+	
+	font-weight:800; 
+	font-size: 50px;
+	text-align:center;
+}
+.consonant{
+	width:200px;
+	height:200px;
+	
+	background: #FAF9F9;
+	mix-blend-mode: normal;
+	border-radius: 20px;
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 800;
+	font-size: 150px;
+	line-height: 182px;
+	text-align: center;
+	
+	color: #000000;
+}
+.givenWordTable{
+	border-collapse: separate;
+  	border-spacing: 50px;
+}
+.hintBtn{
+	background: #FFF1AA;
+	width:200px;
+	height:50px;
+	border-radius: 70px;
+	border: transparent;
+	
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 30px;
+	
+	text-align: center;
+	
+}
+.hintTable{
+	border-collapse: separate;
+  	border-spacing: 20px 0px;
+}
+.hintTableText{
+	font-weight:900; 
+	font-size:25px; 
+	text-align:center;
+}
+.inputAnswer{
+	width: 40%;
+	height: 100px;
+	margin-top:2%;
+	
+	background: #FAF9F9;
+	mix-blend-mode: normal;
+	border-radius: 25px;
+	
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 40px;
+	line-height: 61px;
+	text-align: center;
+	
+	border:transparent;
+	
+}
+.answer_btn {
+    border: none;
+    cursor: pointer;
+    background-color: #FFC01E;
+    margin-left:5%;
+}
