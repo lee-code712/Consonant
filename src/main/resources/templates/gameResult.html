@@ -23,9 +23,9 @@
 		<div class="contentWrap">
 			<div class="resultWrap">
 				<p class="result" th:each="quiz, stat : ${quizList}" >
-					<th:block th:if="${quiz.quizDifficulty == 3}">[[${stat.count}]]. [[${quiz.question}]] [[${quiz.answer}]] 난이도: 상 [[${userAnswer[stat.count - 1]}]] [[${resultArray[stat.count - 1]}]]</th:block>
-					<th:block th:if="${quiz.quizDifficulty == 2}">[[${stat.count}]]. [[${quiz.question}]] [[${quiz.answer}]] 난이도: 중 [[${userAnswer[stat.count - 1]}]] [[${resultArray[stat.count - 1]}]]</th:block>
-					<th:block th:if="${quiz.quizDifficulty == 1}">[[${stat.count}]]. [[${quiz.question}]] [[${quiz.answer}]] 난이도: 하 [[${userAnswer[stat.count - 1]}]] [[${resultArray[stat.count - 1]}]]</th:block>
+					<th:block th:if="${quiz.quizDifficulty == 3}">[[${stat.count}]]. [[${quiz.question}]] [[${quiz.answer}]] 난이도: 상 / [[${userAnswer[stat.count - 1]}]] [[${resultArray[stat.count - 1]}]]</th:block>
+					<th:block th:if="${quiz.quizDifficulty == 2}">[[${stat.count}]]. [[${quiz.question}]] [[${quiz.answer}]] 난이도: 중 / [[${userAnswer[stat.count - 1]}]] [[${resultArray[stat.count - 1]}]]</th:block>
+					<th:block th:if="${quiz.quizDifficulty == 1}">[[${stat.count}]]. [[${quiz.question}]] [[${quiz.answer}]] 난이도: 하 / [[${userAnswer[stat.count - 1]}]] [[${resultArray[stat.count - 1]}]]</th:block>
 				</p>
 			</div>
 			<div class="pointWrap">

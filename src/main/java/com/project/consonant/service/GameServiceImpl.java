@@ -96,7 +96,6 @@ public class GameServiceImpl implements GameService{
 		game.setGameScore(scoreSum);
 		game.setGameNo(0);
 		int createGameResult = gameDao.createGame(game);
-		//System.out.println("서비스실행결과:" + game.getGameNo()); //mybatis에서 selectKey로 넘겨받은 gameNo
 		
 		int createQuizResult = 0;
 		for(InputQuiz iq : inputQuizList) {
@@ -140,6 +139,7 @@ public class GameServiceImpl implements GameService{
 	}
 	
 	
+	
 	//게임 플레이
 	List<Quiz> playGameQuiz = new ArrayList<>();  //게임 플레이 할때 퀴즈 리스트 객체
 	Game gameInfo = new Game(); //게임 플레이할 때 게임 정보 저장 객체
@@ -171,6 +171,8 @@ public class GameServiceImpl implements GameService{
 		this.userAnswer = userAnswer;
 	}
 	
+	
+	
 	//게임 채점
 	public String[] resultArray; //답안 정답 여부 저장 배열
 	@Transactional
@@ -198,11 +200,11 @@ public class GameServiceImpl implements GameService{
 		
 		resultMap.put("correctNum", correctNum);
 		
-		if(pointFlag == -1) {
+		if(pointFlag == -1) { //하나라도 틀린 문제 존재 -> 포인트 획득 불가
 			resultMap.put("point", 0);
 		}
 		else {
-			resultMap.put("point", 100);
+			resultMap.put("point", 100); //다 맞음 -> 포인트 획득
 			memberSvc.updatePoint(memberId, 100, 1);
 		}
 		
