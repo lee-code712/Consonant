@@ -88,7 +88,7 @@ public class GameController {
 				session.setAttribute("member", newMemberInfo);
 			}
 		 
-			mav.setViewName("redirect:/game/gameList"); //게임 생성시 리스트로 이동
+			mav.setViewName("redirect:/game/list"); //게임 생성시 리스트로 이동
 		}catch (GameException e) {
 			List<Category> categoryList = gameSvc.getAllCategory();
 			List<InputQuiz> inputQuizList = gameSvc.getInputQuizList();

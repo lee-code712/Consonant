@@ -46,7 +46,7 @@
 		
 		<div align="center" style="padding-bottom:50px;">
 			<input type="text" class="inputAnswer" id="inputAnswer"></input>
-			<button type="button" class="answer_btn"  th:onclick="|solveQuestion(${quiz.gameNo}, ${gameInfo.quizNumber})|">
+			<button type="button" class="answer_btn" id="answer_btn" th:onclick="|solveQuestion(${quiz.gameNo}, ${gameInfo.quizNumber})|">
 					<img src="/images/check_mark.svg">
 			</button>	
 		</div>
@@ -56,12 +56,6 @@
 	
 	
 	<th:block layout:fragment="script">
-		<script th:inline="javascript">
-			/*<![CDATA[*/
-			const point = /*[[${session.member.point}]]*/ + 0;
-			/*]]>*/
-			console.log(point);
-		</script>
 		<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 		<script src="/js/playGame.js"></script>
 	</th:block>
