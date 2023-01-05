@@ -47,12 +47,11 @@ public class GameController {
 		Member memberInfo = (Member) session.getAttribute("member");
 		System.out.println(memberInfo.getMemberId());
 		List<Category> categoryList = gameSvc.goCreateGame();
-		//ModelAndView mav = new ModelAndView();
+
 		model.addAttribute("memberInfo", memberInfo);
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("createGameCommand", new CreateGameCommand());
 		model.addAttribute("inputQuiz", new InputQuiz());
-		//model.addAttribute("createGame");
 		
 		return "createGame";
 	}
@@ -72,8 +71,6 @@ public class GameController {
 		
 			return mav;
 		}
-		
-		//System.out.println(createGameCommand.getGameTitle() + " " + createGameCommand.getGameDifficulty());
 			
 		try {
 			List<InputQuiz> inputQuizList = gameSvc.getInputQuizList();
@@ -155,12 +152,7 @@ public class GameController {
 	@GetMapping("/playGame/{gameNo}/{quizIdx}/{answer}")
 	public String solveQuiz(Model model, HttpSession session, @PathVariable("gameNo") int gameNo, @PathVariable("quizIdx") int quizIdx, @PathVariable("answer") String quizAnswer) throws Exception{
 		gameSvc.getUserAnswer().put(quizIdx, quizAnswer); //입력한 답안을 답안배열에 저장
-		/*
-		 Set<Integer> keySet = gameSvc.getUserAnswer().keySet();
-	     for (Integer key : keySet) {
-	          System.out.println(key + " : " + gameSvc.getUserAnswer().get(key));
-	     }
-	    */
+		
 	    if(quizIdx + 1 == gameSvc.getPlayGameQuiz().size()) {
 	    	
 	 		return "redirect:/game/result"; //결과로 이동
@@ -198,17 +190,31 @@ public class GameController {
 	
 	
 	//게임 결과
-	@PostMapping("/result")
-	public String getResult(Model model, HttpSession session, HttpServletRequest request) throws Exception{
+	@PostMapping("/result/{gameNo}")
+	public String getResult(Model model, HttpSession session, @PathVariable("gameNo") int gameNo, HttpServletRequest request) throws Exception{
 		Member memberInfo = (Member) session.getAttribute("member");
 		String answer = request.getParameter("answer");
 		gameSvc.getUserAnswer().put(gameSvc.getPlayGameQuiz().size() - 1, answer);
-		/*
-		Set<Integer> keySet = gameSvc.getUserAnswer().keySet();
-	     for (Integer key : keySet) {
-	          System.out.println(key + " : " + gameSvc.getUserAnswer().get(key));
-	     }
-	     */
+		
+		Map<String, Integer> resultMap = gameSvc.gameResult(memberInfo.getMemberId());
+		int score = resultMap.get("score");
+		int point = resultMap.get("point");
+		int correctNum = resultMap.get("correctNum");
+		String[] resultArray = gameSvc.getResultArray();
+		List<Quiz> quizList = gameSvc.getPlayGameQuiz();
+		Map<Integer, String> userAnswer = gameSvc.getUserAnswer();
+		
+		Member newMemberInfo = memberSvc.findMember(memberInfo.getMemberId());
+		newMemberInfo.setPasswd(null);
+		session.setAttribute("member", newMemberInfo);
+		
+		model.addAttribute("score", score);
+		model.addAttribute("point", point);
+		model.addAttribute("correctNum", correctNum);
+		model.addAttribute("quizList", quizList);
+		model.addAttribute("resultArray", resultArray);
+		model.addAttribute("userAnswer", userAnswer);
+		
 		return "gameResult";
 	}
 }
