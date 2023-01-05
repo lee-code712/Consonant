@@ -29,4 +29,7 @@ public interface GameService {
 	void setGameInfo(Game gameInfo);
 	Map<Integer, String> getUserAnswer();
 	void setUserAnswer(Map<Integer, String> userAnswer);
+	Map<String, Integer> gameResult(String memberId);
+	String[] getResultArray();
+	void setResultArray(String[] resultArray);
 }

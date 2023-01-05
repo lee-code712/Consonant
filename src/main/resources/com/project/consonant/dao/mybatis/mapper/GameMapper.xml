@@ -72,6 +72,8 @@
 			<result column="gameNo" jdbcType="BIGINT" property="gameNo"/>
 		</collection>
 	</resultMap>
+	
+
 </mapper>
 
 

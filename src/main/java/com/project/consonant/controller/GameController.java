@@ -198,8 +198,8 @@ public class GameController {
 	
 	
 	//게임 결과
-	@PostMapping("/result")
-	public String getResult(Model model, HttpSession session, HttpServletRequest request) throws Exception{
+	@PostMapping("/result/{gameNo}")
+	public String getResult(Model model, HttpSession session, @PathVariable("gameNo") int gameNo, HttpServletRequest request) throws Exception{
 		Member memberInfo = (Member) session.getAttribute("member");
 		String answer = request.getParameter("answer");
 		gameSvc.getUserAnswer().put(gameSvc.getPlayGameQuiz().size() - 1, answer);
@@ -209,6 +209,25 @@ public class GameController {
 	          System.out.println(key + " : " + gameSvc.getUserAnswer().get(key));
 	     }
 	     */
+		Map<String, Integer> resultMap = gameSvc.gameResult(memberInfo.getMemberId());
+		int score = resultMap.get("score");
+		int point = resultMap.get("point");
+		int correctNum = resultMap.get("correctNum");
+		String[] resultArray = gameSvc.getResultArray();
+		List<Quiz> quizList = gameSvc.getPlayGameQuiz();
+		Map<Integer, String> userAnswer = gameSvc.getUserAnswer();
+		
+		Member newMemberInfo = memberSvc.findMember(memberInfo.getMemberId());
+		newMemberInfo.setPasswd(null);
+		session.setAttribute("member", newMemberInfo);
+		
+		model.addAttribute("score", score);
+		model.addAttribute("point", point);
+		model.addAttribute("correctNum", correctNum);
+		model.addAttribute("quizList", quizList);
+		model.addAttribute("resultArray", resultArray);
+		model.addAttribute("userAnswer", userAnswer);
+		
 		return "gameResult";
 	}
 }

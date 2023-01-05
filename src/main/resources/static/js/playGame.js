@@ -10,7 +10,7 @@ function solveQuestion(gameNo, quizNumber){
 	}
 	
 	if(index + 1 == quizNumber){
-		var url = '/game/result';
+		var url = '/game/result/' + gameNo;
 		sendPost(url, answer);
 	}
 	else if(index + 1 < quizNumber){

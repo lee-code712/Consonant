@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.project.consonant.domain.Game;
 import com.project.consonant.domain.GameInfoVO;
+import com.project.consonant.domain.History;
 import com.project.consonant.domain.Quiz;
 
 public interface GameDao {
@@ -12,4 +13,5 @@ public interface GameDao {
 	List<Game> findAllGames(String memberId);
 	List<Game> findAllGamesByCategory(String memberId, String categoryId);
 	GameInfoVO findGame(int gameNo);
+
 }	

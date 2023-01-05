@@ -9,6 +9,7 @@ import com.project.consonant.dao.GameDao;
 import com.project.consonant.dao.mybatis.mapper.GameMapper;
 import com.project.consonant.domain.Game;
 import com.project.consonant.domain.GameInfoVO;
+import com.project.consonant.domain.History;
 import com.project.consonant.domain.Quiz;
 
 @Repository
@@ -43,4 +44,5 @@ public class MybatisGameDao implements GameDao{
 	public GameInfoVO findGame(int gameNo) {
 		return gameMapper.findGame(gameNo);
 	}
+
 }

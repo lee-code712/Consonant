@@ -1,5 +1,7 @@
 package com.project.consonant.service;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,10 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.consonant.dao.CategoryDao;
 import com.project.consonant.dao.GameDao;
+import com.project.consonant.dao.HistoryDao;
 import com.project.consonant.domain.Category;
 import com.project.consonant.domain.CreateGameCommand;
 import com.project.consonant.domain.Game;
 import com.project.consonant.domain.GameInfoVO;
+import com.project.consonant.domain.History;
 import com.project.consonant.domain.InputQuiz;
 import com.project.consonant.domain.Quiz;
 import com.project.consonant.service.exception.GameException;
@@ -26,6 +30,10 @@ public class GameServiceImpl implements GameService{
 	CategoryDao categoryDao;
 	@Autowired
 	GameDao gameDao;
+	@Autowired
+	HistoryDao historyDao;
+	@Autowired
+	MemberService memberSvc;
 	
 	List<InputQuiz> quizList = new ArrayList<>();  //게임 생성에 필요한 퀴즈를 저장해둠
 	
@@ -163,7 +171,59 @@ public class GameServiceImpl implements GameService{
 		this.userAnswer = userAnswer;
 	}
 	
-	
+	//게임 채점
+	public String[] resultArray; //답안 정답 여부 저장 배열
+	@Transactional
+	public Map<String, Integer> gameResult(String memberId){
+		resultArray = new String[playGameQuiz.size()];
+		int pointFlag = 1; //포인트 획득 가능 여부
+		int score = 0; //획득 점수
+		int correctNum = 0; //맞은 문제 개수
+		for(int i = 0; i < playGameQuiz.size(); i++){
+			Quiz q = playGameQuiz.get(i);
+			if(q.getAnswer().equals(userAnswer.get(i))) { //정답과 답안이 일치하면 점수 추가, 맞은문제로 표시
+				score += q.getQuizDifficulty();
+				resultArray[i] = "O";
+				correctNum++;
+			}
+			else { //하나라도 오답인 경우 점수를 받을 수 없음. 오답으로 표시
+				pointFlag = -1;
+				resultArray[i] = "X";
+			}
+		}
+		
+		Map<String, Integer> resultMap = new HashMap<String, Integer>();
+		resultMap.put("score", score);
+		memberSvc.updateTotalScoreAndRankings(memberId, score);
+		
+		resultMap.put("correctNum", correctNum);
+		
+		if(pointFlag == -1) {
+			resultMap.put("point", 0);
+		}
+		else {
+			resultMap.put("point", 100);
+			memberSvc.updatePoint(memberId, 100, 1);
+		}
+		
+		//db에 history 저장
+		History history = new History(correctNum, score, gameInfo.getGameNo(), memberId);
+		int historyNum = historyDao.findHistory(gameInfo.getGameNo(), memberId);
+		if(historyNum == 0) { //기존 이력이 없으면 추가
+			historyDao.playGameHistory(history);
+		}
+		else { //기존 이력이 있으면 업데이트
+			historyDao.updatePlayGameHistory(history);
+		}
+		
+		return resultMap;
+	}
+	public String[] getResultArray() {
+		return resultArray;
+	}
+	public void setResultArray(String[] resultArray) {
+		this.resultArray = resultArray;
+	}
 	
 	
 }
