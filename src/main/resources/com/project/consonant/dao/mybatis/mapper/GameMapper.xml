@@ -29,6 +29,7 @@
 				COALESCE(h.score, 0) AS score
 		FROM game_info g LEFT OUTER JOIN (SELECT history.score, history.game_no, history.member_id FROM history WHERE history.member_id = #{memberId}) h
 		ON g.game_no = h.game_no
+		WHERE g.member_id != #{memberId}
 		ORDER BY g.game_no DESC
 	</select>
 	
@@ -39,7 +40,7 @@
 				COALESCE(h.score, 0) AS score
 		FROM game_info g LEFT OUTER JOIN (SELECT history.score, history.game_no, history.member_id FROM history WHERE history.member_id = #{memberId}) h
 		ON g.game_no = h.game_no
-		WHERE g.category_id = #{categoryId}
+		WHERE g.category_id = #{categoryId} and g.member_id != #{memberId}
 		ORDER BY g.game_no DESC
 	</select>
 	
