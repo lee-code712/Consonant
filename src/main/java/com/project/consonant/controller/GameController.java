@@ -45,7 +45,7 @@ public class GameController {
 	@GetMapping("/createGame")
 	public String goCreateGame(Model model, HttpSession session) throws Exception{
 		Member memberInfo = (Member) session.getAttribute("member");
-		System.out.println(memberInfo.getMemberId());
+		
 		List<Category> categoryList = gameSvc.goCreateGame();
 
 		model.addAttribute("memberInfo", memberInfo);
@@ -75,7 +75,7 @@ public class GameController {
 		try {
 			List<InputQuiz> inputQuizList = gameSvc.getInputQuizList();
 			createGameCommand.setMemberId(memberInfo.getMemberId());
-			//System.out.println("아이디: " + createGameCommand.getMemberId() + " 퀴즈리스트 사이즈: "+inputQuizList.size());
+			
 			boolean createResult = gameSvc.createGame(createGameCommand, inputQuizList);
 		
 			if(createResult == true) {
@@ -126,10 +126,11 @@ public class GameController {
 	@GetMapping("/playGame/{gameNo}")
 	public String playGame(Model model, HttpSession session, @PathVariable("gameNo") int gameNo) throws Exception{
 		GameInfoVO gameInfoVO = gameSvc.findGame(gameNo);
-		System.out.println("게임 타이틀: " + gameInfoVO.getGameTitle() );
+		/*
 		for(Quiz q : gameInfoVO.getQuizList()) {
 			System.out.println("퀴즈: " + q.getAnswer());
 		}
+		*/
 		gameSvc.setGameInfo(new Game( gameInfoVO.getGameNo(), gameInfoVO.getGameTitle(), gameInfoVO.getGameIntro(),
 							gameInfoVO.getGameDifficulty(), gameInfoVO.getQuizNumber(), gameInfoVO.getGameScore(),
 							gameInfoVO.getCategoryId(), gameInfoVO.getCategoryName()));
