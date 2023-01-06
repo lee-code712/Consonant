@@ -217,4 +217,11 @@ public class GameController {
 		
 		return "gameResult";
 	}
+	
+	
+	//게임 매뉴얼로 이동
+	@GetMapping("/manual")
+	public String goManual(Model model) throws Exception{
+		return "manual";
+	}
 }
