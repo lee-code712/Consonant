@@ -35,17 +35,21 @@ function gameListJson(pageType, categoryId) {
 				gameInfoTr.appendChild(createTdElement("quizNameTd", "quizNameTd", game.gameTitle));
 				gameInfoTr.appendChild(createTdElement("scoreTd", "scoreTd", "내 점수: " + game.score + " / 총 점수: " + game.gameScore));
 				
-				const buttonTd = document.createElement("td");
-				buttonTd.style.width = "15%";
-				buttonTd.rowSpan = "2";
-				const startBtn = document.createElement("button");
-				startBtn.className = "btnGameStart";
-				startBtn.type = "button";
-				startBtn.innerText = "시작";
-				startBtn.onclick = function(){ location.href = "/game/playGame/" + game.gameNo };
-				
-				buttonTd.appendChild(startBtn);
-				gameInfoTr.appendChild(buttonTd);
+				console.log(game.memberId);
+				console.log(memberId);
+				if (game.memberId != memberId) {
+					const buttonTd = document.createElement("td");
+					buttonTd.style.width = "15%";
+					buttonTd.rowSpan = "2";
+					const startBtn = document.createElement("button");
+					startBtn.className = "btnGameStart";
+					startBtn.type = "button";
+					startBtn.innerText = "시작";
+					startBtn.onclick = function(){ location.href = "/game/playGame/" + game.gameNo };
+					
+					buttonTd.appendChild(startBtn);
+					gameInfoTr.appendChild(buttonTd);
+				}
 				
 				const gameInfoTr2 = document.createElement("tr");
 				gameInfoTr2.appendChild(createTdElement("", "", game.gameIntro));

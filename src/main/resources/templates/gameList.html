@@ -33,6 +33,11 @@
 	</div>
 	
 	<th:block layout:fragment="script">
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			const memberId = /*[[${session.member.memberId}]]*/ + "";
+			/*]]>*/
+		</script>
 		<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 		<script src="/js/gameList.js"></script>
 	</th:block>
