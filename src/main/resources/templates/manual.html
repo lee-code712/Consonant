@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/comm/layout}">
+	
+	<head>
+		<meta charset="UTF-8" />
+		<title>Consonant Game List</title>
+	</head>
+	
+	<th:block layout:fragment="css">
+		<link th:href="@{/css/comm.css}" rel="stylesheet" />
+		<link th:href="@{/css/manual.css}" rel="stylesheet" />
+	</th:block>
+	<div layout:fragment="content" align="center">
+		<div align="right">
+			<button onclick="location.href='/game/list'" class="gameListBtn">게임 리스트</button>
+		</div>
+		<div>
+		<table class="manualTable">
+			<tr>
+				<td rowspan="3" class="consonantFunc">초성 게임 생성</td>
+				<td>1.</td>
+				<td>퀴즈명, 카테고리, 난이도, 퀴즈소개, 퀴즈 등록은 필수입니다.</td>
+			</tr>
+			<tr>
+				<td>2.</td>
+				<td>퀴즈 입력 시 난이도는 후에 점수 산정의 기준이 됩니다. 상-3점 / 중-2점 / 하-1점</td>
+			</tr>
+			<tr>
+				<td>3.</td>
+				<td>퀴즈 입력 시 차감포인트를 지정할 수 있습니다. 10~50pt까지 가능합니다.</td>
+			</tr>
+			<tr class="space"></tr>
+			<tr>
+				<td rowspan="4" class="consonantFunc">초성 게임 플레이</td>
+				<td>1.</td>
+				<td>다른 사용자가 만든 퀴즈만 리스트에서 확인할 수 있습니다.</td>
+			</tr>
+			<tr>
+				<td>2.</td>
+				<td>각 퀴즈마다 포인트를 사용해 힌트를 볼 수 있으며 소모 포인트는 힌트 버튼 위에 기재되어 있습니다.</td>
+			</tr>
+			<tr>
+				<td>3.</td>
+				<td>한 게임의 모든 퀴즈 문제를 다 맞아야 100포인트를 획득할 수 있습니다.</td>
+			</tr>
+			<tr>
+				<td>4.</td>
+				<td>한 게임의 모든 퀴즈 난이도의 합산을 점수로 받게 되며 점수는 누적되어 랭킹에 반영됩니다.</td>
+			</tr>
+			<tr class="space"></tr>
+			<tr>
+				<td rowspan="4" class="consonantFunc">스피드 게임 플레이</td>
+				<td>1.</td>
+				<td>제시되는 초성은 랜덤이며 60초 안에 최대한 많은 답안을 제출하여야 합니다.</td>
+			</tr>
+			<tr>
+				<td>2.</td>
+				<td>국립국어원 표준국어사전에 등재된 정답으로 인정됩니다.</td>
+			</tr>
+			<tr>
+				<td>3.</td>
+				<td>인정답안 10개당 10포인트를 획득하실 수 있습니다.</td>
+			</tr>
+			<tr>
+				<td>4.</td>
+				<td>인정답안 개수만큼 점수로 받게 되며 점수는 누적되어 랭킹에 반영됩니다.</td>
+			</tr>
+		</table>
+		</div>
+	</div>
+</html>
