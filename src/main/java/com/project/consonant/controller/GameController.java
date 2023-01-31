@@ -93,7 +93,7 @@ public class GameController {
 			mav.addObject("inputQuizList", inputQuizList);
 			mav.addObject("createFailed", true);
 			mav.addObject("e", e.getMessage());
-			mav.setViewName("redirect:/game/createGame");
+			mav.setViewName("createGame");
 			return mav;
 		}	
 		return mav;
