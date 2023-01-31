@@ -1,8 +1,9 @@
 package com.project.consonant.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -53,6 +54,8 @@ public class GameController {
 		model.addAttribute("createGameCommand", new CreateGameCommand());
 		model.addAttribute("inputQuiz", new InputQuiz());
 		
+		session.setAttribute("inputQuizList", new ArrayList<InputQuiz>());
+		
 		return "createGame";
 	}
 	
@@ -61,10 +64,10 @@ public class GameController {
 	public ModelAndView createGame(HttpSession session, @Valid @ModelAttribute("createGameCommand") CreateGameCommand createGameCommand, BindingResult result, @ModelAttribute("inputQuiz") InputQuiz inputQuiz) throws Exception{
 		
 		Member memberInfo = (Member) session.getAttribute("member");
+		List<InputQuiz> inputQuizList = (List<InputQuiz>) session.getAttribute("inputQuizList");
 		ModelAndView mav = new ModelAndView();
 		if (result.hasErrors()) {
 			List<Category> categoryList = gameSvc.getAllCategory();
-			List<InputQuiz> inputQuizList = gameSvc.getInputQuizList();
 			mav.addObject("categoryList", categoryList);
 			mav.addObject("inputQuizList", inputQuizList);
 			mav.setViewName("createGame");
@@ -73,7 +76,6 @@ public class GameController {
 		}
 			
 		try {
-			List<InputQuiz> inputQuizList = gameSvc.getInputQuizList();
 			createGameCommand.setMemberId(memberInfo.getMemberId());
 			
 			boolean createResult = gameSvc.createGame(createGameCommand, inputQuizList);
@@ -83,12 +85,12 @@ public class GameController {
 				Member newMemberInfo = memberSvc.findMember(memberInfo.getMemberId());
 				newMemberInfo.setPasswd(null);
 				session.setAttribute("member", newMemberInfo);
+				session.setAttribute("inputQuizList", new ArrayList<InputQuiz>());
 			}
 		 
 			mav.setViewName("redirect:/game/list"); //게임 생성시 리스트로 이동
 		}catch (GameException e) {
 			List<Category> categoryList = gameSvc.getAllCategory();
-			List<InputQuiz> inputQuizList = gameSvc.getInputQuizList();
 			mav.addObject("categoryList", categoryList);
 			mav.addObject("inputQuizList", inputQuizList);
 			mav.addObject("createFailed", true);
@@ -101,24 +103,27 @@ public class GameController {
 	
 	//게임 생성할때 퀴즈 추가
 	@PostMapping("/insertQuiz")
-	public String insertQuiz(Model model, @Valid @RequestBody InputQuiz inputQuiz, BindingResult result, @ModelAttribute("createGameCommand") CreateGameCommand createGameCommand) throws Exception{
+	public String insertQuiz(HttpSession session, Model model, @Valid @RequestBody InputQuiz inputQuiz, BindingResult result, @ModelAttribute("createGameCommand") CreateGameCommand createGameCommand) throws Exception{
 
 		if (result.hasErrors()) {
 			return "createGame::#insertQuizForm";
 		}
-		
-		List<InputQuiz> inputQuizList = gameSvc.insertQuiz(inputQuiz);
-		model.addAttribute("inputQuizList", inputQuizList);
+		List<InputQuiz> inputQuizList = (List<InputQuiz>)session.getAttribute("inputQuizList"); //세션에 퀴즈 추가 리스트 임시저장
+		List<InputQuiz> resultInputQuizList = gameSvc.insertQuiz(inputQuizList, inputQuiz);
+		session.setAttribute("inputQuizList", resultInputQuizList);
+		model.addAttribute("inputQuizList", resultInputQuizList);
 		return "createGame::#quizBox";
 	}
 	
 	//게임 생성할때 추가했던 퀴즈 삭제
 	@PostMapping("/removeQuiz")
-	public String removeQuiz(Model model, @RequestBody String question) throws Exception{
+	public String removeQuiz(HttpSession session, Model model, @RequestBody String question) throws Exception{
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, String> map = mapper.readValue(question, Map.class);
-		List<InputQuiz> inputQuizList = gameSvc.removeQuiz(map.get("question"));
-		model.addAttribute("inputQuizList", inputQuizList);
+		List<InputQuiz> inputQuizList = (List<InputQuiz>)session.getAttribute("inputQuizList");
+		List<InputQuiz> resultInputQuizList = gameSvc.removeQuiz(inputQuizList, map.get("question"));
+		session.setAttribute("inputQuizList", resultInputQuizList);
+		model.addAttribute("inputQuizList", resultInputQuizList);
 		return "createGame::#resultDiv";
 	}
 	
@@ -126,22 +131,21 @@ public class GameController {
 	@GetMapping("/playGame/{gameNo}")
 	public String playGame(Model model, HttpSession session, @PathVariable("gameNo") int gameNo) throws Exception{
 		GameInfoVO gameInfoVO = gameSvc.findGame(gameNo);
-		/*
-		for(Quiz q : gameInfoVO.getQuizList()) {
-			System.out.println("퀴즈: " + q.getAnswer());
-		}
-		*/
-		gameSvc.setGameInfo(new Game( gameInfoVO.getGameNo(), gameInfoVO.getGameTitle(), gameInfoVO.getGameIntro(),
+		
+		session.setAttribute("gameInfo", 
+							new Game( gameInfoVO.getGameNo(), gameInfoVO.getGameTitle(), gameInfoVO.getGameIntro(),
 							gameInfoVO.getGameDifficulty(), gameInfoVO.getQuizNumber(), gameInfoVO.getGameScore(),
 							gameInfoVO.getCategoryId(), gameInfoVO.getCategoryName()));
 
-		gameSvc.setPlayGameQuiz(gameInfoVO.getQuizList());
+		session.setAttribute("playGameQuiz", gameInfoVO.getQuizList());
+		session.setAttribute("userAnswer", new HashMap<Integer, String>());
 		
-		Quiz quiz = gameSvc.getPlayGameQuiz().get(0); //첫번째 퀴즈 보냄
+		List<Quiz> playGameQuiz = (List<Quiz>)session.getAttribute("playGameQuiz");
+		Quiz quiz = playGameQuiz.get(0); //첫번째 퀴즈 보냄
 		String question = quiz.getQuestion();
 		char[] questionArray = question.toCharArray();
 		
-		model.addAttribute("gameInfo", gameSvc.getGameInfo());
+		model.addAttribute("gameInfo", session.getAttribute("gameInfo"));
 		model.addAttribute("quiz", quiz);
 		model.addAttribute("quizQuestion", questionArray);
 		model.addAttribute("currentQue", 1);
@@ -152,18 +156,21 @@ public class GameController {
 	//정답 입력->다음 퀴즈로 넘기기
 	@GetMapping("/playGame/{gameNo}/{quizIdx}/{answer}")
 	public String solveQuiz(Model model, HttpSession session, @PathVariable("gameNo") int gameNo, @PathVariable("quizIdx") int quizIdx, @PathVariable("answer") String quizAnswer) throws Exception{
-		gameSvc.getUserAnswer().put(quizIdx, quizAnswer); //입력한 답안을 답안배열에 저장
+		List<Quiz> playGameQuiz = (List<Quiz>)session.getAttribute("playGameQuiz");
+		HashMap<Integer, String> userAnswer = (HashMap<Integer, String>) session.getAttribute("userAnswer");
+		userAnswer.put(quizIdx, quizAnswer); //입력한 답안을 세션에 임시 저장
+		session.setAttribute("userAnswer", userAnswer);
 		
-	    if(quizIdx + 1 == gameSvc.getPlayGameQuiz().size()) {
+	    if(quizIdx + 1 == playGameQuiz.size()) {
 	    	
 	 		return "redirect:/game/result"; //결과로 이동
 	    }
-	    else if(quizIdx + 1 <= gameSvc.getPlayGameQuiz().size()) {
-		    Quiz quiz = gameSvc.getPlayGameQuiz().get(quizIdx + 1); //다음 퀴즈 보냄
+	    else if(quizIdx + 1 <= playGameQuiz.size()) {
+		    Quiz quiz = playGameQuiz.get(quizIdx + 1); //다음 퀴즈 보냄
 			String question = quiz.getQuestion(); //다음 퀴즈 초성
 			char[] questionArray = question.toCharArray();
 			
-			model.addAttribute("gameInfo", gameSvc.getGameInfo());
+			model.addAttribute("gameInfo", session.getAttribute("gameInfo"));
 			model.addAttribute("quiz", quiz);
 			model.addAttribute("quizQuestion", questionArray);
 			model.addAttribute("currentQue", quizIdx + 2);
@@ -176,8 +183,8 @@ public class GameController {
 	@GetMapping("/getHint/{quizIdx}")
 	public String getHint(Model model, HttpSession session, @PathVariable("quizIdx") int quizIdx) throws Exception{
 		Member memberInfo = (Member) session.getAttribute("member");
-		
-		Quiz quiz = gameSvc.getPlayGameQuiz().get(quizIdx);
+		List<Quiz> playGameQuiz = (List<Quiz>)session.getAttribute("playGameQuiz");
+		Quiz quiz = playGameQuiz.get(quizIdx);
 		
 		memberSvc.updatePoint(memberInfo.getMemberId(), quiz.getHintPoint(), -1);
 		Member newMemberInfo = memberSvc.findMember(memberInfo.getMemberId());
@@ -195,15 +202,26 @@ public class GameController {
 	public String getResult(Model model, HttpSession session, @PathVariable("gameNo") int gameNo, HttpServletRequest request) throws Exception{
 		Member memberInfo = (Member) session.getAttribute("member");
 		String answer = request.getParameter("answer");
-		gameSvc.getUserAnswer().put(gameSvc.getPlayGameQuiz().size() - 1, answer);
+		Game gameInfo = (Game)session.getAttribute("gameInfo");
 		
-		Map<String, Integer> resultMap = gameSvc.gameResult(memberInfo.getMemberId());
+		List<Quiz> playGameQuiz = (List<Quiz>)session.getAttribute("playGameQuiz");
+		
+		HashMap<Integer, String> userAnswer = (HashMap<Integer, String>) session.getAttribute("userAnswer");
+		userAnswer.put(playGameQuiz.size() - 1, answer); //입력한 답안을 세션에 임시 저장
+		session.setAttribute("userAnswer", userAnswer);
+	
+		Map<String, Integer> resultMap = gameSvc.gameResult(playGameQuiz, userAnswer, gameInfo, memberInfo.getMemberId());
 		int score = resultMap.get("score");
 		int point = resultMap.get("point");
 		int correctNum = resultMap.get("correctNum");
-		String[] resultArray = gameSvc.getResultArray();
-		List<Quiz> quizList = gameSvc.getPlayGameQuiz();
-		Map<Integer, String> userAnswer = gameSvc.getUserAnswer();
+		String[] resultArray = new String[playGameQuiz.size()];
+
+		for(int i = 0; i < playGameQuiz.size(); i++) {
+			if(resultMap.get("index" + (i + 1)) == 1)
+				resultArray[i] = "O";
+			else
+				resultArray[i] = "X";
+		}
 		
 		Member newMemberInfo = memberSvc.findMember(memberInfo.getMemberId());
 		newMemberInfo.setPasswd(null);
@@ -212,10 +230,15 @@ public class GameController {
 		model.addAttribute("score", score);
 		model.addAttribute("point", point);
 		model.addAttribute("correctNum", correctNum);
-		model.addAttribute("quizList", quizList);
+		model.addAttribute("quizList", playGameQuiz);
 		model.addAttribute("resultArray", resultArray);
 		model.addAttribute("userAnswer", userAnswer);
 		
+		//세션에 저장된 값들 삭제
+		session.setAttribute("gameInfo", new Game());
+		session.setAttribute("playGameQuiz", new ArrayList<Quiz>());
+		session.setAttribute("userAnswer", new HashMap<Integer, String>());
+	
 		return "gameResult";
 	}
 	
