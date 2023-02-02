@@ -74,7 +74,7 @@
 <h3>8. ETC</h3>
 <h4>*매뉴얼</h4>
 -초성게임 리스트에서 매뉴얼 버튼을 클릭하면 매뉴얼 화면으로 이동됨<br>
-<img width="935" alt="structure1" src="https://user-images.githubusercontent.com/57795722/215470313-a727a5d3-54d1-486b-ae55-5945b79112b0.png"/><br>
+<img width="935" alt="structure1" src="https://user-images.githubusercontent.com/57795722/216232340-e1e4f934-3562-4383-bfad-e151df4364c1.png"/><br>
 <h4>*top</h4>
 -id를 누르면 로그아웃을 할 수 있는 드롭다운 버튼이 생김<br>
 -초성게임 타이틀을 누르면 홈화면으로 이동됨<br>
