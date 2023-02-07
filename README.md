@@ -1,4 +1,5 @@
 # Consonant-초성 게임 서비스
+<h2>시연 영상: https://youtu.be/p-jBG3qrLbE</h2>
 <h3>1. 로그인 </h3>
 <img width="935" alt="structure1" src="https://user-images.githubusercontent.com/57795722/215466174-6e70b506-2742-4ed9-84a7-4d88bc04bb3f.png" /><br>
 -비밀번호를 입력하지 않은 경우
