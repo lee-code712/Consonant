@@ -28,8 +28,10 @@
 <img width="935" alt="structure1" src="https://user-images.githubusercontent.com/57795722/215468241-04b4eb56-4f74-4caa-836e-65131fe6401d.png"/><br>
 
 <h4>*스피드 게임 플레이 결과</h4>
+-채점 시간이 조금 걸릴 수 있음<br>
 <img width="935" alt="structure1" src="https://user-images.githubusercontent.com/57795722/215469179-c80f0b9b-6844-4ac2-b024-a52930f6d521.png"/><br>
-
+-정답인 답안을 클릭하면 단어 뜻을 볼 수 있음.
+<img width="935" alt="structure1" src="https://user-images.githubusercontent.com/57795722/217115216-1fca2fa3-b849-4374-adb0-c7c877b606e1.png"/><br>
 <hr>
 <h3>5. 초성 게임 생성</h3>
 -게임 생성 시 게임명, 카테고리, 난이도, 퀴즈소개, 퀴즈 등록은 필수. <br>
