@@ -6,11 +6,11 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"> 
 	
 	<head>
-    	<th:block th:replace="/comm/config :: configFragment"></th:block>
+    	<th:block th:replace="comm/config :: configFragment"></th:block>
   	</head>
 	
 	<body>
-		<header th:replace="/comm/header :: headerFragment"></header> 
+		<header th:replace="comm/header :: headerFragment"></header> 
 		<div layout:fragment="content"></div> 
 	</body> 
 	

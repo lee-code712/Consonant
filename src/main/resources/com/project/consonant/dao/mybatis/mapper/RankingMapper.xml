@@ -11,8 +11,8 @@
 			FROM member
 			WHERE rank > 0
 			ORDER BY total_score DESC
-		)
-		WHERE ROWNUM <![CDATA[<=]]> 10
+		) as rankings
+		WHERE rank <![CDATA[<=]]> 10
 	</select>
 	
 	<!-- 총 점수에 따른 순위 갱신 -->
@@ -20,9 +20,9 @@
 		UPDATE member a
 		SET rank = (
 				SELECT rank
-				FROM (SELECT RANK() OVER(ORDER BY total_score DESC) AS rank, member_id FROM member) b
+				FROM (SELECT RANK() OVER(ORDER BY total_score DESC) AS rank, member_id FROM member) AS b
 				WHERE a.member_id = b.member_id
-			)
+			) 
 		WHERE total_score <![CDATA[>]]> 0
 	</update>
 	

@@ -5,7 +5,7 @@
 	<!-- 게임 등록 -->
 	<insert id="createGame" parameterType="Game">
 		<selectKey keyProperty="gameNo" resultType="int" order="BEFORE">
-			SELECT game_no_seq.nextval as game_no FROM DUAL
+			SELECT NEXTVAL('game_no_seq') as game_no 
 		</selectKey>
 		
 		INSERT INTO GAME_INFO (game_no, game_title, game_intro, game_difficulty, quiz_number, game_score, category_id, member_id)
@@ -16,7 +16,7 @@
 	<!-- 게임 등록시 퀴즈 등록 -->
 	<insert id="createQuiz" parameterType="Quiz">
 		<selectKey keyProperty="quizNo" resultType="int" order="BEFORE">
-			SELECT quiz_no_seq.nextval as quiz_no FROM DUAL
+			SELECT NEXTVAL('quiz_no_seq') as quiz_no 
 		</selectKey>
 		
 		INSERT INTO QUIZ (quiz_no, question, answer, quiz_difficulty, hint, hint_point, game_no)

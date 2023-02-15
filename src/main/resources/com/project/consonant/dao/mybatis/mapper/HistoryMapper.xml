@@ -5,7 +5,7 @@
 	<!-- 게임 플레이 후 획득한 점수 저장 -->
 	<insert id="playGameHistory" parameterType="History">
 		INSERT INTO History (play_date, correct_number, score, game_no, member_id)
-		VALUES(SYSDATE, #{correctNumber}, #{score}, #{gameNo}, #{memberId})
+		VALUES(now(), #{correctNumber}, #{score}, #{gameNo}, #{memberId})
 	</insert>
 	
 	<!-- 플레이 이력 조회 -->
@@ -18,7 +18,7 @@
 	<!-- 플레이 이력 갱신 -->
 	<update id="updatePlayGameHistory" parameterType="History">
 		UPDATE History
-		SET play_date = SYSDATE, correct_number = #{correctNumber}, score = #{score}
+		SET play_date = now(), correct_number = #{correctNumber}, score = #{score}
 		WHERE game_no = #{gameNo} and member_id = #{memberId}
 	</update>
 </mapper>
