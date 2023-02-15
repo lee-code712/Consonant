@@ -18,7 +18,7 @@
 	</th:block>
 	
 	<div layout:fragment="content">		
-		<form action="member/login" method="post" th:object="${member}">
+		<form action="/member/login" method="post" th:object="${member}">
 			<div layout:fragment="content">
 				<div id="loginWrap">
 					<span class="login-img"></span>
@@ -35,7 +35,7 @@
 					
 					<button type="submit" id="loginBtn">로그인</button>
 					<button type="button" id="signUpBtn"
-						onclick="location.href='member/signUp'">회원가입</button>
+						onclick="location.href='/member/signUp'">회원가입</button>
 				</div>
 			</div>
 		</form>
