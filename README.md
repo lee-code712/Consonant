@@ -2,7 +2,7 @@
 초성 게임 프로젝트
 </br></br>
 
-## ✔ 프로젝트 데모
+## ✔ 프로젝트 시연 영상
 https://youtu.be/p-jBG3qrLbE
 </br></br>
 
