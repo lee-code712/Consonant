@@ -22,7 +22,7 @@ https://youtu.be/p-jBG3qrLbE
 - Backend Framework : `Spring Boot 2.7.4`
 - Template Engine : `Thymeleaf`
 - Database Access Technology : `MyBatis`
-- Database : MySQL 8.0.34
+- Database : Oracle → PostgreSQL(AWS RDS)
 - Version Control: Git
 </br></br>
 
